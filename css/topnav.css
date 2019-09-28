@@ -1,0 +1,38 @@
+#topnav {
+  display: flex;
+  background-color: #484848;
+  padding: 1%;
+  grid-area: navbar;
+}
+
+#topnav a {
+  color: #fff;
+  text-decoration: none;
+  padding: 0 1em;
+}
+
+#topnav a:hover {
+  color: #cac7c7;
+}
+
+#topnav ul {
+  list-style: none;
+}
+
+.topmenu > li {
+  display: inline-block;
+}
+
+.topmenu > li:hover .submenu {
+  display: block;
+}
+
+.submenu {
+  display: none;
+  position: absolute;  
+  background-color: #484848;
+}
+
+.submenu > li {
+  margin: 0.5em 0;
+}

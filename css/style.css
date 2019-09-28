@@ -1,0 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+  font-family: Roboto, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+}
+
+#grid {
+  display: grid;
+  grid-template-areas: "navbar";
+  grid-template-columns: repeat(1fr, 1);
+  grid-template-rows: repeat(1fr, 1);
+}
+
