@@ -10,10 +10,3 @@ html {
   letter-spacing: 0.1em;
 }
 
-#grid {
-  display: grid;
-  grid-template-areas: "navbar";
-  grid-template-columns: repeat(1fr, 1);
-  grid-template-rows: repeat(1fr, 1);
-}
-
