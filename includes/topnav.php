@@ -12,14 +12,14 @@
 		<li><a href="user.php"><?php echo $user['name'] ?></a></li>
 		<?php } ?>
 		<?php if (isset($_SESSION['user'])) {?>
-		<li><img src="<?php 
+		<li><a href="<?php echo $user_icon ?>" target="_blank"><img src="<?php 
 			if ($user_icon != null) {
 				echo $user_icon;
 			}
 			else {
 				echo '../images/user.png';
 			}
-		?>" alt="icon" class="icon"></li>
+		?>" alt="icon" class="icon"></a></li>
 	<?php } ?>
 	</ul>
 </nav>
