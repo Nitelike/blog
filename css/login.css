@@ -1,0 +1,11 @@
+.input-holder {
+	margin-bottom: 10px;
+}
+.error-block {
+	margin-bottom: 10px;
+	color: red;
+}
+.success-block {
+	margin-bottom: 10px;
+	color: green;
+}

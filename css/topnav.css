@@ -1,0 +1,15 @@
+.topnav {
+	background-color: #f4f4f4;
+	display: flex;
+	justify-content: center;
+	font-size: 1.2em;	
+	list-style: none;
+	padding: 10px;	
+	margin: 0 5% 20px 5%;
+}
+.topnav li {
+	display: inline-block;
+}
+.topnav a {
+	padding: 5px 20px;
+}

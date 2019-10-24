@@ -1,0 +1,33 @@
+.post-info {
+	display: flex;
+	flex-direction: column;
+}
+.post-title {
+	font-size: 24px;
+	margin-bottom: 5px;
+}
+.categories a {
+	color: grey;
+}
+.categories a:hover {
+	color: #171717;
+}
+.post-meta small, .post-meta a {
+	color: grey;
+	margin-top: 5px;
+}
+.post-meta a:hover {
+	color: #171717;
+}
+.likes, .dislikes, .views {
+	margin-right: 10px;
+}
+.likes button, .dislikes button {
+	outline: none;
+	cursor: pointer;
+	border: 0;
+	background-color: transparent;
+}
+.likes button:hover, .dislikes button:hover {
+	color: grey;
+}

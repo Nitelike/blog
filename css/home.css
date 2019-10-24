@@ -1,0 +1,31 @@
+.post {
+	padding: 10px;
+	margin-bottom: 10px;
+	background-color: #f4f4f4;
+}
+.post-icon {
+	margin-right: 1%;
+}
+.post-info {
+	display: flex;
+	flex-direction: column;
+} 
+.post .categories a {
+	color: grey;
+}
+.post .categories a:hover {
+	color: #171717;
+}
+.post-icon {
+	height: 15vh;
+}
+.post-meta small, .post-meta a {
+	color: grey;
+	margin-top: 5px;
+}
+.post-meta a:hover {
+	color: #171717;
+}
+.likes, .dislikes, .views {
+	margin-right: 10px;
+}

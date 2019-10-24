@@ -1,0 +1,27 @@
+article {
+	margin-bottom: 20px;
+	background-color: #f4f4f4;
+	padding: 20px;
+}
+article img {
+	margin: 0 auto;
+	display: block;
+	max-width: 100%;
+}
+article a {
+	color: grey;
+}
+article a:hover {
+	color: #171717;
+}
+.post-content {
+	margin: 20px 0;
+}
+.post-content p {
+	margin: 10px 0;
+}
+.post-content h2 {
+	margin: 10px 0;
+	font-weight: 600;
+	font-size: 1.1em;
+}

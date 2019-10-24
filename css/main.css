@@ -1,0 +1,50 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: 'Open Sans', sans-serif;
+	color: #171717;
+	box-sizing: border-box;
+}
+a {
+	text-decoration: none;
+}
+a:hover {
+	color: grey;
+}
+.content {
+	display: flex;
+	flex-direction: column;
+	width: 65%;
+	float: left;
+	margin-left: 5%;
+}
+input, textarea {
+	padding: 5px;
+	font-size: 0.9em;
+	max-width: 100%;
+}
+select {
+	margin-top: 5px;
+}
+input:focus, textarea:focus, select:focus {
+	outline: none;
+}
+.page_subtitle {
+	margin-bottom: 20px;
+}
+.page_subtitle span {
+	font-size: 1.2em;
+	font-weight: bold;
+}
+@media screen and (max-width: 850px) {
+	aside {
+		display: none;
+	}
+	.content {
+		width: 90%;
+		margin-right: 5%;
+	}
+	.topmenu {
+		display: block;
+	}
+}
