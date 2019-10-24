@@ -17,51 +17,51 @@
 				}
 
 				if ($mark_type == 1) {
-					if (strpos($user['liked'], $post_id) === false and strpos($user['disliked'], $post_id) === false) {		
+					if (strpos($user['liked'], ' ' . $post_id . ',') === false and strpos($user['disliked'], ' ' . $post_id . ',') === false) {		
 						$likes = $art['likes'] + 1;
 						$to_like = mysqli_query($connection, "UPDATE `articles` SET `likes` = $likes WHERE `articles`.`id` = $post_id;");
 						if ($to_like) {
-							$liked = $liked . ' ' . $post_id;
+							$liked = $liked . ' ' . $post_id . ',';
 							if (!mysqli_query($connection, "UPDATE `users` SET `liked` = '$liked' WHERE `users`.`id` = $user_id;")) {
 								echo mysqli_error($connection);
 							}
 							echo '&#5123; ' . $likes;
 						}
 					}
-					else if (strpos($user['liked'], $post_id) !== false and strpos($user['disliked'], $post_id) === false) {
+					else if (strpos($user['liked'], ' ' . $post_id . ',') !== false and strpos($user['disliked'], ' ' . $post_id . ',') === false) {
 						$likes = $art['likes'] - 1;
 						$to_like = mysqli_query($connection, "UPDATE `articles` SET `likes` = $likes WHERE `articles`.`id` = $post_id;");
 						if ($to_like) {
-							$liked = str_replace(' '. $post_id, '', $liked);
+							$liked = str_replace(' '. $post_id . ',', '', $liked);
 							mysqli_query($connection, "UPDATE `users` SET `liked` = '$liked' WHERE `users`.`id` = $user_id;");
 							echo '&#5123; ' . $likes;
 						}
 					}
-					else if (strpos($user['liked'], $post_id) === false and strpos($user['disliked'], $post_id) !== false) {	
+					else if (strpos($user['liked'], ' ' . $post_id . ',') === false and strpos($user['disliked'], ' ' . $post_id . ',') !== false) {	
 							$likes = $art['likes'];
 							echo '&#5123; ' . $likes;
 					}
 				}
 				else if ($mark_type == 0) {
-					if (strpos($user['disliked'], $post_id) === false and strpos($user['liked'], $post_id) === false) {		
+					if (strpos($user['disliked'], ' ' . $post_id . ',') === false and strpos($user['liked'], ' ' . $post_id . ',') === false) {		
 						$dislikes = $art['dislikes'] + 1;
 						$to_dislike = mysqli_query($connection, "UPDATE `articles` SET `dislikes` = $dislikes WHERE `articles`.`id` = $post_id;");
 						if ($to_dislike) {
-							$disliked = $disliked . ' ' . $post_id;
+							$disliked = $disliked . ' ' . $post_id . ',';
 							mysqli_query($connection, "UPDATE `users` SET `disliked` = '$disliked' WHERE `users`.`id` = $user_id;");
 							echo '&#5121; ' . $dislikes;
 						}
 					}
-					else if (strpos($user['disliked'], $post_id) !== false and strpos($user['liked'], $post_id) === false) {
+					else if (strpos($user['disliked'], ' ' . $post_id . ',') !== false and strpos($user['liked'], ' ' . $post_id . ',') === false) {
 						$dislikes = $art['dislikes'] - 1;
 						$to_dislike = mysqli_query($connection, "UPDATE `articles` SET `dislikes` = $dislikes WHERE `articles`.`id` = $post_id;");
 						if ($to_dislike) {	
-							$disliked = str_replace(' '. $post_id, '', $disliked);
+							$disliked = str_replace(' ' . $post_id . ',', '', $disliked);
 							mysqli_query($connection, "UPDATE `users` SET `disliked` = '$disliked' WHERE `users`.`id` = $user_id;");		
 							echo '&#5121; ' . $dislikes;
 						}
 					}
-					else if (strpos($user['disliked'], $post_id) === false and strpos($user['liked'], $post_id) !== false) {
+					else if (strpos($user['disliked'], ' ' . $post_id . ',') === false and strpos($user['liked'], ' ' . $post_id . ',') !== false) {
 							$dislikes = $art['dislikes'];	
 							echo '&#5121; ' . $dislikes;
 					}					
