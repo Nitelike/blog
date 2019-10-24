@@ -35,6 +35,10 @@
 								$errors[] = 'User with name "'. $name . '" already exists';
 							}
 						}
+						if (trim($data['image']) != '') {
+							$image_url = trim($data['image']);
+							$query = mysqli_query($connection, "UPDATE `users` SET `image_url` = '$image_url' WHERE `users`.`id` = $user_id;");
+						}
 						if (trim($data['password']) != '' or trim($data['new_password']) != '' or trim($data['confirm_new_password']) != '') {
 							$password = trim($data['password']);
 							$new_password = trim($data['new_password']);
@@ -71,6 +75,10 @@
 
 					<div class="input-holder">
 						<input name="confirm_new_password" type="password" placeholder="Confirm password" value="<?php echo @$data['confirm_new_password'] ?>" maxlength="30">
+					</div>
+
+					<div class="input-holder">
+						<input name="image" type="text" placeholder="Image url" value="<?php echo @$data['image'] ?>">
 					</div>
 
 					<div class="input-holder">

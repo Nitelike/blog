@@ -11,5 +11,15 @@
 		?>
 		<li><a href="user.php"><?php echo $user['name'] ?></a></li>
 		<?php } ?>
+		<?php if (isset($_SESSION['user'])) {?>
+		<li><img src="<?php 
+			if ($user_icon != null) {
+				echo $user_icon;
+			}
+			else {
+				echo '../images/user.png';
+			}
+		?>" alt="icon" class="icon"></li>
+	<?php } ?>
 	</ul>
 </nav>

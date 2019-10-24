@@ -13,3 +13,8 @@
 .topnav a {
 	padding: 5px 20px;
 }
+.icon {
+	max-height: 30px;
+	border-radius: 50%;
+	border: 1px solid #171717;
+}
