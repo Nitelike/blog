@@ -28,5 +28,6 @@ Requrements:
 			-password (text)
 			-liked (text, null)
 			-disliked (text, null)
+			-image_url (text, null)
 	
 	-Server with php support (I used xampp)

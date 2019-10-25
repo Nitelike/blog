@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2019 at 06:37 PM
+-- Generation Time: Oct 25, 2019 at 06:42 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -75,7 +75,8 @@ CREATE TABLE `users` (
   `name` varchar(20) NOT NULL,
   `password` text NOT NULL,
   `liked` text DEFAULT NULL,
-  `disliked` text DEFAULT NULL
+  `disliked` text DEFAULT NULL,
+  `image_url` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

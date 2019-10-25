@@ -38,6 +38,7 @@
 						if (trim($data['image']) != '') {
 							$image_url = trim($data['image']);
 							$query = mysqli_query($connection, "UPDATE `users` SET `image_url` = '$image_url' WHERE `users`.`id` = $user_id;");
+							header("Refresh:0");
 						}
 						if (trim($data['password']) != '' or trim($data['new_password']) != '' or trim($data['confirm_new_password']) != '') {
 							$password = trim($data['password']);
@@ -78,7 +79,7 @@
 					</div>
 
 					<div class="input-holder">
-						<input name="image" type="text" placeholder="Image url" value="<?php echo @$data['image'] ?>">
+						<input name="image" type="text" placeholder="Image url" value="<?php echo @$data['image'] ?>" autocomplete="off">
 					</div>
 
 					<div class="input-holder">
