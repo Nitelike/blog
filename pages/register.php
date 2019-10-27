@@ -3,30 +3,26 @@
 <head>
 	<?php require '../includes/config.php' ?>
 	<meta charset="UTF-8">
-	<title><?php echo $params['title'] ?> - Register</title>	
-	<link rel="stylesheet" type="text/css" href="../css/main.css?version=1.0">
+	<title><?php echo $params['title'] ?> - Регистрация</title>	
+	<?php include '../includes/common-header.php' ?>
 	<link rel="stylesheet" type="text/css" href="../css/login.css?version=1.0">
-	<link rel="stylesheet" type="text/css" href="../css/topnav.css?version=1.0">
-	<link rel="stylesheet" type="text/css" href="../css/aside.css?version=1.0">
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
 	<?php include '../includes/topnav.php' ?>
-	<?php include '../includes/aside.php' ?>	
 
-	<div class="content">
+	<div class="wrapper">
 		<?php 
 			if (isset($_POST['to_register'])) {
 				$errors = array();
 				$data = $_POST;
 				if (trim($data['login']) == '') {
-					$errors[] = 'Enter login';
+					$errors[] = 'Введите логин';
 				}
 				if (trim($data['password']) == '') {
-					$errors[] = 'Enter password';
+					$errors[] = 'Введите пароль';
 				}
 				if ($data['password-2'] != $data['password']) {
-					$errors[] = 'Passwords are not match';
+					$errors[] = 'Пароли не совпадают';
 				}
 				if (count($errors) > 0) {
 					echo '<div class="error-block">' . $errors[0] . '</div>';
@@ -35,7 +31,7 @@
 					$name = mysqli_real_escape_string($connection, trim($data['login']));
 					$password = password_hash(trim($data['password']), PASSWORD_DEFAULT);
 					if (mysqli_num_rows(mysqli_query($connection, "SELECT `name` FROM `users` WHERE `name` = '$name'")) > 0) {
-						$errors[] = 'User with login "' . $name . '" already exists';
+						$errors[] = 'Пользователь с логином "' . $name . '" уже существует';
 						echo '<div class="error-block">' . $errors[0] . '</div>';
 					}
 					else {
@@ -57,24 +53,23 @@
 
 		<form action="register.php" method="post">
 			<div class="input-holder">
-				<input name="login" type="text" placeholder="Login" value="<?php echo @$data['login'] ?>" maxlength="30">
+				<input name="login" type="text" placeholder="Логин" value="<?php echo @$data['login'] ?>" maxlength="30">
 			</div>
 
 			<div class="input-holder">
-				<input name="password" type="password" placeholder="Password" value="<?php echo @$data['password'] ?>" maxlength="30">
+				<input name="password" type="password" placeholder="Пароль" value="<?php echo @$data['password'] ?>" maxlength="30">
 			</div>
 
 			<div class="input-holder">
-				<input name="password-2" type="password" placeholder="Confirm password" value="<?php echo @$data['password-2'] ?>" maxlength="30">
+				<input name="password-2" type="password" placeholder="Подтвердите пароль" value="<?php echo @$data['password-2'] ?>" maxlength="30">
 			</div>
 
 			<div class="input-holder">
-				<button name="to_register" type="submit">Register</button>
+				<button class="send-button" name="to_register" type="submit">Зарегистрировать</button>
 			</div>	
 		</form>
 		
-		<span>If you have an account, you can just sign in</span>
-		<a href="login.php">Sign in</a>	
+		<span>Если у вас уже есть аккаунт, Вы можете просто <a class="inform-link" href="login.php">войти</a> в него</span>		
 	</div>	
 </body>
 </html>

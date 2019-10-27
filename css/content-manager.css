@@ -24,3 +24,13 @@ form {
 	margin-right: 5px;
 	cursor: pointer;
 }
+.toptoolmenu a {
+	display: block;
+}
+@media screen and (min-width: 1101px) {
+
+	.toptoolmenu {
+		display: none;
+	}
+}
+

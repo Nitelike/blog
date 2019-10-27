@@ -3,13 +3,10 @@
 <head>
 	<?php require '../includes/config.php' ?>
 	<meta charset="UTF-8">
-	<title><?php echo $params['title'] ?> - Post</title>
-	<link rel="stylesheet" type="text/css" href="../css/main.css?version=1.0">
+	<title><?php echo $params['title'] ?> - Статья</title>
+	<?php include '../includes/common-header.php' ?>
 	<link rel="stylesheet" type="text/css" href="../css/article.css?version=1.0">
-	<link rel="stylesheet" type="text/css" href="../css/topnav.css?version=1.0">
-	<link rel="stylesheet" type="text/css" href="../css/aside.css?version=1.0">
 	<link rel="stylesheet" type="text/css" href="../css/post-info.css?version=1.0">	
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
 	<?php include '../includes/topnav.php' ?>

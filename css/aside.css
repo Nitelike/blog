@@ -1,10 +1,10 @@
 aside {
 	float: right;
 	margin-right: 5%;
-	margin-bottom: 20px;
 	width: 23%;
-	background-color: #f4f4f4;
+	background-color: #eeeee0;
 	padding: 20px;
+	border-radius: 10px;
 }
 aside form {
 	margin-bottom: 10px;
@@ -18,4 +18,13 @@ aside hr {
 }
 form label {
 	margin-right: 5px;
+}
+aside .search-input {
+	border: 2px solid grey;
+	border-radius: 10px;
+}
+.select-options {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
 }

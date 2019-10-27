@@ -6,18 +6,14 @@
 		<html lang="en">
 		<head>
 			<meta charset="UTF-8">
-			<title><?php echo $params['title'] ?> - User</title>	
-			<link rel="stylesheet" type="text/css" href="../css/main.css?version=1.0">
+			<title><?php echo $params['title'] ?> - Пользователь</title>	
+			<?php include '../includes/common-header.php' ?>
 			<link rel="stylesheet" type="text/css" href="../css/login.css?version=1.0">
-			<link rel="stylesheet" type="text/css" href="../css/topnav.css?version=1.0">
-			<link rel="stylesheet" type="text/css" href="../css/aside.css?version=1.0">
-			<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 		</head>
 		<body>
 			<?php include '../includes/topnav.php' ?>
-			<?php include '../includes/aside.php' ?>	
 
-			<div class="content">
+			<div class="wrapper">
 				<?php 
 					if (isset($_POST['to_change'])) {
 						$errors = array();
@@ -32,7 +28,7 @@
 								
 							}
 							else {
-								$errors[] = 'User with name "'. $name . '" already exists';
+								$errors[] = 'Пользователь с логином "'. $name . '" уже существует';
 							}
 						}
 						if (trim($data['image']) != '') {
@@ -49,10 +45,10 @@
 								echo '<div class="success-block">Password was changed!</div>';
 							}
 							else if (!password_verify($password, $user['password'])) {
-								$errors[] = 'You entered invalid password from this account';
+								$errors[] = 'Неправильный пароль от аккаунта';
 							}
 							else if ($new_password != trim($data['confirm_new_password'])) {
-								$errors[] = 'New passwords don\'t match';
+								$errors[] = 'Новые пароли не совпадают';
 							}
 						}
 						if (count($errors) > 0) {
@@ -63,33 +59,33 @@
 
 				<form action="user.php" method="post">
 					<div class="input-holder">
-						<input name="name" type="text" placeholder="New login" value="<?php echo @$data['name'] ?>" maxlength="30">
+						<input name="name" type="text" placeholder="Новый логин" value="<?php echo @$data['name'] ?>" maxlength="30">
 					</div>
 
 					<div class="input-holder">
-						<input name="password" type="password" placeholder="Password" value="<?php echo @$data['password'] ?>" maxlength="30">
+						<input name="password" type="password" placeholder="Пароль от аккаунта" value="<?php echo @$data['password'] ?>" maxlength="30">
 					</div>
 
 					<div class="input-holder">
-						<input name="new_password" type="password" placeholder="New password" value="<?php echo @$data['new_password'] ?>" maxlength="30">
+						<input name="new_password" type="password" placeholder="Новый пароль" value="<?php echo @$data['new_password'] ?>" maxlength="30">
 					</div>
 
 					<div class="input-holder">
-						<input name="confirm_new_password" type="password" placeholder="Confirm password" value="<?php echo @$data['confirm_new_password'] ?>" maxlength="30">
+						<input name="confirm_new_password" type="password" placeholder="Подтверждение пароля" value="<?php echo @$data['confirm_new_password'] ?>" maxlength="30">
 					</div>
 
 					<div class="input-holder">
-						<input name="image" type="text" placeholder="Image url" value="<?php echo @$data['image'] ?>" autocomplete="off">
+						<input name="image" type="text" placeholder="Путь к иконке" value="<?php echo @$data['image'] ?>" autocomplete="off">
 					</div>
 
 					<div class="input-holder">
-						<button name="to_change" type="submit">Change</button>
+						<button class="send-button" name="to_change" type="submit">Изменить</button>
 					</div>	
 				</form>
 
 				<form action="../includes/logout.php" method="post">
 					<div class="input-holder">
-						<button type="submit">Sign out</button>
+						<button class="send-button" type="submit">Выйти</button>
 					</div>	
 				</form>
 			</div>	
@@ -98,6 +94,6 @@
 	<?php
 	}
 	else {
-		echo 'lol';
+		echo 'Чего?';
 	}
 ?>

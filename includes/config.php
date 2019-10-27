@@ -2,5 +2,5 @@
 	require 'connect.php';
 
 	$params = array(
-		'title' => 'Blog'
+		'title' => 'Беларусь - славная земля'
 	);	
