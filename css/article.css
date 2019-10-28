@@ -27,3 +27,14 @@ article a:hover {
 	font-weight: 600;
 	font-size: 1.1em;
 }
+.read-more {
+	display: none;
+}
+.read-more-item:not(:last-child) {
+	margin-bottom: 10px;
+}
+@media screen and (max-width: 1100px) {
+	.read-more {
+		display: block;
+	}
+}

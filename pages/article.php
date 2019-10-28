@@ -9,14 +9,15 @@
 	<link rel="stylesheet" type="text/css" href="../css/post-info.css?version=1.0">	
 </head>
 <body>
-	<?php include '../includes/topnav.php' ?>
-	<?php include '../includes/aside.php' ?>
+	<?php include '../includes/topnav.php'; $article_id = $_GET['id']; ?>
+	<aside>
+		<?php include '../includes/read-more.php' ?>
+	</aside>
 	<div class="content">
 		<article>
-			<?php 
-				$article_id = $_GET['id'];
+			<?php 		
 				$result = mysqli_query($connection, "SELECT * FROM `articles` WHERE `id` = $article_id");
-				if (mysqli_num_rows($result) > 0) {
+				if (mysqli_num_rows($result) !== false) {
 					$post = mysqli_fetch_assoc($result);
 				
 
@@ -33,6 +34,10 @@
 				?>
 			</div>	
 		</article>
+	</div>
+
+	<div class="read-more wrapper">
+		<?php include '../includes/read-more.php' ?>
 	</div>
 </body>
 </html>

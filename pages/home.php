@@ -9,6 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="../css/post-info.css?version=1.0">	
 	<link rel="stylesheet" type="text/css" href="../css/post.css?version=1.0">
 	<link rel="stylesheet" type="text/css" href="../css/logo.css?version=1.0">
+	<script src="../js/menu-button.js"></script>
 </head>
 <body>
 	<?php include '../includes/logo.php' ?>
