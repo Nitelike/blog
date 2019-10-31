@@ -2,28 +2,28 @@
 include '../includes/config.php';
 include '../includes/get-user.php';
 if (isset($_SESSION['user']) and $user_name == 'admin') {
-	if (!empty($_GET['title'])) {
-		$title = $_GET['title'];
+	if (!empty($_POST['title'])) {
+		$title = $_POST['title'];
 		$title = str_replace('<h1>', '<span>', $title);
 		$title = str_replace('<h1>', '<span>', $title);
 		$title = str_replace('style=', '', $title);
 		$title = mysqli_real_escape_string($connection, $title);	
-		if ($_GET['mode'] == 'create_article' or $_GET['mode'] == 'update_article') {
-			if (!empty($_GET['category'])) {
+		if ($_POST['mode'] == 'create_article' or $_POST['mode'] == 'update_article') {
+			if (!empty($_POST['category'])) {
 				$categories = '';			
-				$text = $_GET['text'];
+				$text = $_POST['text'];
 				$text = str_replace('<h1>', '<span>', $text);
 				$text = str_replace('<h1>', '<span>', $text);
 				$text = str_replace('style=', '', $text);
 				$text = mysqli_real_escape_string($connection, $text);	
-				foreach ($_GET['category'] as $cat) {
+				foreach ($_POST['category'] as $cat) {
 					$categories  = $categories .' ' . $cat . ',';
 				}
-				if ($_GET['mode'] == 'create_article') {
+				if ($_POST['mode'] == 'create_article') {
 					$sql = "INSERT INTO articles (title, text, category_id) VALUES ('$title', '$text', '$categories')";
 				}
-				else if ($_GET['mode'] == 'update_article') {
-					$update_post_id = $_GET['update_id'];
+				else if ($_POST['mode'] == 'update_article') {
+					$update_post_id = $_POST['update_id'];
 					$sql = "UPDATE articles SET title = '$title', text = '$text', category_id = '$categories' WHERE `articles`.`id` = $update_post_id";
 				}
 			}
@@ -31,14 +31,14 @@ if (isset($_SESSION['user']) and $user_name == 'admin') {
 				echo 'Вы должны выбрать категорию для статьи';
 			}	
 		}
-		else if ($_GET['mode'] == 'add_category') {
+		else if ($_POST['mode'] == 'add_category') {
 			$sql = "INSERT INTO categories (title) VALUES ('$title')";		
 		}
-		else if ($_GET['mode'] == 'update_category') {
-			$update_category_id = $_GET['update_id'];
+		else if ($_POST['mode'] == 'update_category') {
+			$update_category_id = $_POST['update_id'];
 			$sql = "UPDATE categories SET title = '$title' WHERE `id` = $update_category_id";		
 		}
-		else if ($_GET['mode'] == 'find_for_delete') {
+		else if ($_POST['mode'] == 'find_for_delete') {
 			//some basic html
 			?>
 			
@@ -109,7 +109,7 @@ if (isset($_SESSION['user']) and $user_name == 'admin') {
 			</html>			
 			<?php
 		}
-		else if ($_GET['mode'] == 'update') {
+		else if ($_POST['mode'] == 'update') {
 			?>
 			
 			<!DOCTYPE html>
@@ -169,7 +169,7 @@ if (isset($_SESSION['user']) and $user_name == 'admin') {
 			</html>			
 			<?php	
 		}
-		if ($_GET['mode']  == 'add_category' or $_GET['mode'] == 'create_article' or $_GET['mode'] == 'update_article' or $_GET['mode'] == 'update_category') {
+		if ($_POST['mode']  == 'add_category' or $_POST['mode'] == 'create_article' or $_POST['mode'] == 'update_article' or $_POST['mode'] == 'update_category') {
 			if (mysqli_query($connection, $sql)) {
 				echo 'Created';
 				header('Location: home.php');
@@ -180,16 +180,16 @@ if (isset($_SESSION['user']) and $user_name == 'admin') {
 		}	
 	}	
 	else  {
-		if (!empty($_GET['delete_cat'])) {		
-			foreach ($_GET['delete_cat'] as $option) {
+		if (!empty($_POST['delete_cat'])) {		
+			foreach ($_POST['delete_cat'] as $option) {
 				$result = mysqli_query($connection, "DELETE FROM `categories` WHERE `categories`.`id` = $option");
 				if (!$result) {
 					echo mysqli_error($connection);
 				}
 			}
 		}	
-		if (!empty($_GET['delete_art'])) {		
-			foreach ($_GET['delete_art'] as $option) {
+		if (!empty($_POST['delete_art'])) {		
+			foreach ($_POST['delete_art'] as $option) {
 				$result = mysqli_query($connection, "DELETE FROM `articles` WHERE `articles`.`id` = $option");
 				if (!$result) {
 					echo mysqli_error($connection);

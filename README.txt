@@ -1,6 +1,6 @@
 About:
-	The simple blog template
-	To run site, open file "pages/home.php" on server
+	Final version for district step of olympiad
+	To run site, open file "index.php" on server
 	You can change your database settings (name, server, user, password) in "includes/connect.php"
 	You can create user account. For this click on the button "SIGN IN" on the top navigation panel
 	User with account could like/dislike posts

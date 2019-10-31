@@ -178,7 +178,7 @@
 						<?php echo $mode_name ?>
 					</span>
 				</div>
-				<form action="content-manager-handler.php" method="get" autocomplete="off">
+				<form action="content-manager-handler.php" method="post" autocomplete="off">
 					<input name="mode" value="<?php echo $mode ?>" class="disabled">
 					<input name="update_id" value="<?php echo @$id ?>"  class="disabled">
 					<input id="title" type="text" name="title" placeholder="<?php echo $title_placeholder ?>" required="true" value="<?php echo @$title ?>">
