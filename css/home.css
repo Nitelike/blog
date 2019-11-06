@@ -1,31 +1,44 @@
-.post {
-	padding: 10px;
+.category-wrapper {
+	text-align: center;
+}
+.category-item {
+	vertical-align: top;
+	word-wrap: break-word;
+	display: inline-block;
+	width: 300px;
+	min-height: 300px;
+	margin: 10px;
+	padding: 5px;
+	border: 1px solid #171717;
+	border-radius: 10px;
+}
+.cat-title {
+	font-weight: bold;
+	font-size: 1.2em;
 	margin-bottom: 10px;
-	background-color: #f4f4f4;
 }
-.post-icon {
-	margin-right: 1%;
+.cat-description, .cat-title {
+	display: block;
 }
-.post-info {
-	display: flex;
-	flex-direction: column;
-} 
-.post .categories a {
-	color: grey;
+form, .about-project {
+	text-align: center;
 }
-.post .categories a:hover {
-	color: #171717;
+.search-input {
+	width: 40vw;
 }
-.post-icon {
-	height: 15vh;
+.subtitle {
+	text-align: center;
+	margin: 20px 0;
+	font-size: 1.5em;
 }
-.post-meta small, .post-meta a {
-	color: grey;
-	margin-top: 5px;
+@media screen and (max-width: 768px) {
+	.search-input {
+		width: 60%;
+	}
 }
-.post-meta a:hover {
-	color: #171717;
-}
-.likes, .dislikes, .views {
-	margin-right: 10px;
+@media screen and (max-width: 480px) {
+	.category-item {
+		width: 100%;
+		margin: 10px 0;
+	}
 }

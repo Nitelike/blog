@@ -1,7 +1,9 @@
 article {
+	word-wrap: break-word;
 	margin-bottom: 20px;
-	background-color: #f4f4f4;
+	background-color: #eeeee0;
 	padding: 20px;
+	border-radius: 10px;
 }
 article img {
 	margin: 0 auto;
@@ -24,4 +26,15 @@ article a:hover {
 	margin: 10px 0;
 	font-weight: 600;
 	font-size: 1.1em;
+}
+.read-more {
+	display: none;
+}
+.read-more-item:not(:last-child) {
+	margin-bottom: 10px;
+}
+@media screen and (max-width: 1100px) {
+	.read-more {
+		display: block;
+	}
 }

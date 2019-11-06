@@ -3,20 +3,15 @@
 <head>
 	<?php require '../includes/config.php' ?>
 	<meta charset="UTF-8">
-	<title><?php echo $params['title'] ?> - Home</title>	
-	<link rel="stylesheet" type="text/css" href="../css/main.css?version=1.0">
+	<title><?php echo $params['title'] ?> - Категория</title>	
+	<?php include '../includes/common-header.php' ?>
 	<link rel="stylesheet" type="text/css" href="../css/home.css?version=1.0">
-	<link rel="stylesheet" type="text/css" href="../css/topnav.css?version=1.0">
-	<link rel="stylesheet" type="text/css" href="../css/aside.css?version=1.0">
 	<link rel="stylesheet" type="text/css" href="../css/post-info.css?version=1.0">	
 	<link rel="stylesheet" type="text/css" href="../css/post.css?version=1.0">
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
 	<?php include '../includes/topnav.php' ?>
-	<?php include '../includes/aside.php' ?>
-	<div class="content">
-		<div class="page_subtitle">
+		<div class="wrapper centered-page-subtitle">
 			<span>
 				<?php 
 					$dog = $_GET['cat'];
@@ -34,17 +29,28 @@
 				if (mysqli_num_rows($result) > 0) {
 					while ($post = mysqli_fetch_assoc($result)) {
 						if (strpos($post['category_id'], $dog) !== false) {
+							?>
+							<div class="content-90">
+							<?php 
 							include '../includes/post.php';	
 							$counter++;	
+							?>
+							</div>
+							<?php
 						}								
 					}
 				}
 				if ($counter < 1) {
-					echo 'There is no articles in this category';
+					?>
+						<div class="wrapper centered-page-subtitle">
+							<span>
+								В этой категории нет статей
+							</span>
+						</div>
+					<?php
 				}
 			}	
 		?>
-	</div>	
 </body>
 </html>
 <?php mysqli_close($connection) ?>

@@ -2,58 +2,63 @@
 include '../includes/config.php';
 include '../includes/get-user.php';
 if (isset($_SESSION['user']) and $user_name == 'admin') {
-	if (!empty($_GET['title'])) {
-		$title = $_GET['title'];
+	if (!empty($_POST['title'])) {
+		$title = $_POST['title'];
 		$title = str_replace('<h1>', '<span>', $title);
 		$title = str_replace('<h1>', '<span>', $title);
 		$title = str_replace('style=', '', $title);
-		$title = mysqli_real_escape_string($connection, $title);	
-		if ($_GET['mode'] == 'create_article') {
-			if (!empty($_GET['category'])) {
-				$categories = '';			
-				$text = $_GET['text'];
-				$text = str_replace('<h1>', '<span>', $text);
-				$text = str_replace('<h1>', '<span>', $text);
-				$text = str_replace('style=', '', $text);
-				$text = mysqli_real_escape_string($connection, $text);	
-				foreach ($_GET['category'] as $cat) {
-					$categories  = $categories .' ' . $cat;
+		$title = mysqli_real_escape_string($connection, $title);
+		if (isset($_POST['text'])) {
+			$text = $_POST['text'];
+			$text = str_replace('<h1>', '<span>', $text);
+			$text = str_replace('<h1>', '<span>', $text);
+			$text = str_replace('style=', '', $text);
+			$text = mysqli_real_escape_string($connection, $text);
+		}	
+		if ($_POST['mode'] == 'create_article' or $_POST['mode'] == 'update_article') {
+			if (!empty($_POST['category'])) {
+				$categories = ' ' . $_POST['category'] . ',';				
+				if ($_POST['mode'] == 'create_article') {
+					$sql = "INSERT INTO articles (title, text, category_id) VALUES ('$title', '$text', '$categories')";
 				}
-				$sql = "INSERT INTO articles (title, text, category_id) VALUES ('$title', '$text', '$categories')";
+				else if ($_POST['mode'] == 'update_article') {
+					$update_post_id = $_POST['update_id'];
+					$sql = "UPDATE articles SET title = '$title', text = '$text', category_id = '$categories' WHERE `articles`.`id` = $update_post_id";
+				}
 			}
 			else {
-				echo 'You should choose categories for this article';
+				echo 'Вы должны выбрать категорию для статьи';
 			}	
 		}
-		else if ($_GET['mode'] == 'add_category') {
-			$sql = "INSERT INTO categories (title) VALUES ('$title')";		
+		else if ($_POST['mode'] == 'add_category') {
+			$sql = "INSERT INTO categories (title, description) VALUES ('$title', '$text')";		
 		}
-		else if ($_GET['mode'] == 'find_for_delete') {
+		else if ($_POST['mode'] == 'update_category') {
+			$update_category_id = $_POST['update_id'];
+			$sql = "UPDATE categories SET title = '$title', description = '$text' WHERE `id` = $update_category_id";		
+		}
+		else if ($_POST['mode'] == 'find_for_delete') {
 			//some basic html
 			?>
 			
 			<!DOCTYPE html>
-			<html lang="en">
+			<html lang="ru">
 			<head>
 				<meta charset="UTF-8">
-				<title><?php echo $params['title'] ?> - Home</title>	
-				<link rel="stylesheet" type="text/css" href="../css/main.css?version=1.0">
-				<link rel="stylesheet" type="text/css" href="../css/topnav.css?version=1.0">
-				<link rel="stylesheet" type="text/css" href="../css/aside.css?version=1.0">
+				<title><?php echo $params['title'] ?> - Удаление</title>	
+				<?php include '../includes/common-header.php' ?>
 				<link rel="stylesheet" type="text/css" href="../css/post-info.css?version=1.0">	
 				<link rel="stylesheet" type="text/css" href="../css/post.css?version=1.0">
 				<link rel="stylesheet" type="text/css" href="../css/content-manager-handler.css?version=1.0">
-				<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 			</head>
 			<body>
 				<?php include '../includes/topnav.php' ?>
-				<?php include '../includes/aside.php' ?>
-				<div class="content">
-					<div class="page_subtitle">
+					<div class="centered-page-subtitle wrapper">
 						<span>
-							<?php echo 'Results for "' . $title . '":' ?>
+							<?php echo 'Результаты по запросу "' . $title . '"' ?>
 						</span>
 					</div>
+
 					<form autocomplete="off" action="content-manager-handler.php">
 						<?php
 						$counter = 0;
@@ -61,9 +66,9 @@ if (isset($_SESSION['user']) and $user_name == 'admin') {
 						$result = mysqli_query($connection, $sql);	
 						if (mysqli_num_rows($result) > 0) {
 							while ($cat = mysqli_fetch_assoc($result)) {
-								if (strpos(strtolower($cat['title']), strtolower($title)) !== false) {
+								if (strpos(mb_strtolower($cat['title']), mb_strtolower($title)) !== false) {
 									?>
-										<div class="delete-item">
+										<div class="wrapper delete-item">
 											<input class="delete-option" name="delete_cat[]" type="checkbox" value="<?php echo $cat['id'] ?>">
 											<label for="<?php echo $cat['title'] ?>"><?php echo $cat['title'] ?></label>
 										</div>
@@ -76,9 +81,9 @@ if (isset($_SESSION['user']) and $user_name == 'admin') {
 						$result = mysqli_query($connection, $sql);	
 						if (mysqli_num_rows($result) > 0) {
 							while ($post = mysqli_fetch_assoc($result)) {
-								if (strpos(strtolower($post['title']), strtolower($title)) !== false or strpos(strtolower($post['text']), strtolower($title)) !== false) {
+								if (strpos(mb_strtolower($post['title']), mb_strtolower($title)) !== false or strpos(mb_strtolower($post['text']), mb_strtolower($title)) !== false) {
 									?>
-										<div class="delete-item">
+										<div class="wrapper delete-item">
 											<input class="delete-option" name="delete_art[]" type="checkbox" value="<?php echo $post['id'] ?>">
 											<?php include '../includes/post.php' ?>
 										</div>
@@ -88,21 +93,82 @@ if (isset($_SESSION['user']) and $user_name == 'admin') {
 							}
 						}
 						if ($counter < 1) {
-							echo 'Your search returned 0 results';
+							echo '<div class="centered-page-subtitle wrapper"><span>По вашему запросу ничего не найдено</span></div>';
 						}
 						else {
 							?>
-							<input type="submit" value="Delete selected">
+							<div class="wrapper">
+								<button class="send-button" type="submit">Удалить выбранные</button>
+							</div>					
 							<?php
 						}
 						?>
 					</form>
-				</div>
 			</body>
 			</html>			
 			<?php
 		}
-		if ($_GET['mode']  == 'add_category' or $_GET['mode'] == 'create_article') {
+		else if ($_POST['mode'] == 'update') {
+			?>
+			
+			<!DOCTYPE html>
+			<html lang="ru">
+			<head>
+				<meta charset="UTF-8">
+				<title><?php echo $params['title'] ?> - Изменить</title>	
+				<?php include '../includes/common-header.php' ?>
+				<link rel="stylesheet" type="text/css" href="../css/post-info.css?version=1.0">	
+				<link rel="stylesheet" type="text/css" href="../css/post.css?version=1.0">
+				<link rel="stylesheet" type="text/css" href="../css/content-manager-handler.css?version=1.0">
+			</head>
+			<body>
+				<?php include '../includes/topnav.php' ?>
+					<div class="wrapper centered-page-subtitle">
+						<span>
+							<?php echo 'Результаты по запросу "' . $title . '"' ?>
+						</span>
+					</div>
+					<form autocomplete="off" action="content-manager.php">
+						<?php
+						$counter = 0;
+						$sql = "SELECT * FROM `categories`";	
+						$result = mysqli_query($connection, $sql);	
+						if (mysqli_num_rows($result) > 0) {
+							while ($cat = mysqli_fetch_assoc($result)) {
+								if (strpos(mb_strtolower($cat['title']), mb_strtolower($title)) !== false) {
+									?>
+										<div class="wrapper">
+											<a href="content-manager.php?mode=update_category&id=<?php echo $cat['id'] ?>"><?php echo $cat['title'] ?></a>
+										</div>
+									<?php
+									$counter++;
+								}			
+							}
+						}
+						$sql = "SELECT * FROM `articles` ORDER BY `pubdate` DESC";	
+						$result = mysqli_query($connection, $sql);	
+						if (mysqli_num_rows($result) > 0) {
+							while ($post = mysqli_fetch_assoc($result)) {
+								if (strpos(mb_strtolower($post['title']), mb_strtolower($title)) !== false or strpos(mb_strtolower($post['text']), mb_strtolower($title)) !== false) {
+									?>
+										<div class="wrapper">
+											<a href="content-manager.php?mode=update_article&id=<?php echo $post['id'] ?>"><?php echo $post['title'] ?></a>
+										</div>
+									<?php
+									$counter++;
+								}			
+							}
+						}
+						if ($counter < 1) {
+							echo '<div class="centered-page-subtitle wrapper"><span>По вашему запросу ничего не найдено</span></div>';
+						}
+						?>
+					</form>
+			</body>
+			</html>			
+			<?php	
+		}
+		if ($_POST['mode']  == 'add_category' or $_POST['mode'] == 'create_article' or $_POST['mode'] == 'update_article' or $_POST['mode'] == 'update_category') {
 			if (mysqli_query($connection, $sql)) {
 				echo 'Created';
 				header('Location: home.php');
@@ -113,16 +179,16 @@ if (isset($_SESSION['user']) and $user_name == 'admin') {
 		}	
 	}	
 	else  {
-		if (!empty($_GET['delete_cat'])) {		
-			foreach ($_GET['delete_cat'] as $option) {
+		if (!empty($_POST['delete_cat'])) {		
+			foreach ($_POST['delete_cat'] as $option) {
 				$result = mysqli_query($connection, "DELETE FROM `categories` WHERE `categories`.`id` = $option");
 				if (!$result) {
 					echo mysqli_error($connection);
 				}
 			}
 		}	
-		if (!empty($_GET['delete_art'])) {		
-			foreach ($_GET['delete_art'] as $option) {
+		if (!empty($_POST['delete_art'])) {		
+			foreach ($_POST['delete_art'] as $option) {
 				$result = mysqli_query($connection, "DELETE FROM `articles` WHERE `articles`.`id` = $option");
 				if (!$result) {
 					echo mysqli_error($connection);

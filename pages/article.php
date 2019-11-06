@@ -3,23 +3,21 @@
 <head>
 	<?php require '../includes/config.php' ?>
 	<meta charset="UTF-8">
-	<title><?php echo $params['title'] ?> - Post</title>
-	<link rel="stylesheet" type="text/css" href="../css/main.css?version=1.0">
+	<title><?php echo $params['title'] ?> - Статья</title>
+	<?php include '../includes/common-header.php' ?>
 	<link rel="stylesheet" type="text/css" href="../css/article.css?version=1.0">
-	<link rel="stylesheet" type="text/css" href="../css/topnav.css?version=1.0">
-	<link rel="stylesheet" type="text/css" href="../css/aside.css?version=1.0">
 	<link rel="stylesheet" type="text/css" href="../css/post-info.css?version=1.0">	
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
-	<?php include '../includes/topnav.php' ?>
-	<?php include '../includes/aside.php' ?>
+	<?php include '../includes/topnav.php'; $article_id = $_GET['id']; ?>
+	<aside>
+		<?php include '../includes/read-more.php' ?>
+	</aside>
 	<div class="content">
 		<article>
-			<?php 
-				$article_id = $_GET['id'];
+			<?php 		
 				$result = mysqli_query($connection, "SELECT * FROM `articles` WHERE `id` = $article_id");
-				if (mysqli_num_rows($result) > 0) {
+				if (mysqli_num_rows($result) !== false) {
 					$post = mysqli_fetch_assoc($result);
 				
 
@@ -36,6 +34,10 @@
 				?>
 			</div>	
 		</article>
+	</div>
+
+	<div class="read-more wrapper">
+		<?php include '../includes/read-more.php' ?>
 	</div>
 </body>
 </html>

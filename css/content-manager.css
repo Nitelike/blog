@@ -11,6 +11,9 @@ form {
 	margin-bottom: 20px;
 	min-height: 60vh;
 }
+#category-description {
+	resize: none;
+}
 #create-post-button {
 	margin: 10px 0;
 }
@@ -24,3 +27,13 @@ form {
 	margin-right: 5px;
 	cursor: pointer;
 }
+.toptoolmenu a {
+	display: block;
+}
+@media screen and (min-width: 1101px) {
+
+	.toptoolmenu {
+		display: none;
+	}
+}
+
