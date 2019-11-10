@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 	<?php require '../includes/config.php' ?>
 	<meta charset="UTF-8">
@@ -10,7 +10,7 @@
 <body>
 	<?php include '../includes/topnav.php' ?>
 
-	<div class="wrapper">
+	<div class="container wrapper">
 		<?php 
 			if (isset($_POST['to_login'])) {
 				$errors = array();
@@ -55,7 +55,7 @@
 
 		<form action="login.php" method="post">
 			<div class="input-holder">
-				<input name="login" type="text" placeholder="Логин" value="<?php echo @$data['login'] ?>" maxlength="30">
+				<input name="login" type="text" placeholder="Логин" value="<?php echo @$data['login'] ?>" maxlength="20">
 			</div>
 
 			<div class="input-holder">

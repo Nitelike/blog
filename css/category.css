@@ -1,0 +1,26 @@
+.content-col {
+	flex-grow: 1;
+	display: inline-block;
+	width: 100%;
+	padding: 0 15px 0 15px;
+	margin-bottom: 60px;
+}
+.image-wrapper {
+	width: 100%;
+	text-align: center;
+}
+.article-icon {
+	width: 100%;
+}
+@media screen and (min-width: 768px) {
+	.content-col {
+		flex: 1 0 33.333333%;
+    	max-width: 33.333333%;
+	}
+}
+@media screen and (min-width: 992px) {
+	.content-col {
+		flex: 1 0 25%;
+    	max-width: 25%;
+	}
+}

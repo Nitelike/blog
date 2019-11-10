@@ -10,10 +10,8 @@
 </head>
 <body>
 	<?php include '../includes/topnav.php'; $article_id = $_GET['id']; ?>
-	<aside>
-		<?php include '../includes/read-more.php' ?>
-	</aside>
-	<div class="content">
+
+	<div class="container">
 		<article>
 			<?php 		
 				$result = mysqli_query($connection, "SELECT * FROM `articles` WHERE `id` = $article_id");
@@ -36,7 +34,7 @@
 		</article>
 	</div>
 
-	<div class="read-more wrapper">
+	<div class="read-more container">
 		<?php include '../includes/read-more.php' ?>
 	</div>
 </body>

@@ -13,7 +13,7 @@
 		<body>
 			<?php include '../includes/topnav.php' ?>
 
-			<div class="wrapper">
+			<div class="container wrapper">
 				<?php 
 					if (isset($_POST['to_change'])) {
 						$errors = array();

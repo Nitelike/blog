@@ -10,7 +10,7 @@
 <body>
 	<?php include '../includes/topnav.php' ?>
 
-	<div class="wrapper">
+	<div class="container wrapper">
 		<?php 
 			if (isset($_POST['to_register'])) {
 				$errors = array();
@@ -36,7 +36,7 @@
 						echo '<div class="error-block">' . $errors[0] . '</div>';
 					}
 					else if (mysqli_num_rows(mysqli_query($connection, "SELECT `email` FROM `users` WHERE `email` = '$email'")) > 0) {
-						$errors[] = 'Пользователь с таким адресом электронной почты "' . $name . '" уже существует. Если это ваш аккаунт, вы можете просто <a class="inform-link" href="login.php">войти</a> в него.';
+						$errors[] = 'Пользователь с таким адресом электронной почты уже существует. Если это ваш аккаунт, вы можете просто <a class="inform-link" href="login.php">войти</a> в него.';
 						echo '<div class="error-block">' . $errors[0] . '</div>';
 					}
 					else {
@@ -44,8 +44,8 @@
 						$sql = "INSERT INTO users (name, password, email, vkey) VALUES ('$name', '$password', '$email', '$vkey')";
 						if (mysqli_query($connection, $sql)) {
 							$subject = 'Подтверждение адреса электронной почты';
-							$message = "Вы получили это сообщение потому что адрес электронной почты $email был указан при создании нового аккаунта на сайте '$params[title]'. Если вы регистрируете аккаунт на этом сайте, то для подтверждения адреса электронной почты перейдите по ссылке \n\t http://glorious-belarus.epizy.com/pages/verify.php?vkey=$vkey \n Если вы не регистрируете аккаунта на сайте '$params[title]' и получили это письмо случайно, то просто проигнорируйте его.";
-							$author = 'Подготовка к экзамену по истории Беларуси';
+							$message = "Вы получили это сообщение потому что адрес электронной почты $email был указан при создании нового аккаунта на сайте \"$params[title]\". Если вы регистрируете аккаунт на этом сайте, то для подтверждения адреса электронной почты перейдите по ссылке \n\t http://glorious-belarus.epizy.com/pages/verify.php?vkey=$vkey \n Если вы не регистрируете аккаунта на сайте \"$params[title]\" и получили это письмо случайно, то просто проигнорируйте его.";
+							$author = 'Культурное наследие Беларуси';
 
                                 date_default_timezone_set('Etc/UTC');
 
@@ -81,7 +81,7 @@
 
 		<form action="register.php" method="post">
 			<div class="input-holder">
-				<input name="login" type="text" placeholder="Логин" value="<?php echo @$data['login'] ?>" maxlength="30" required="true">
+				<input name="login" type="text" placeholder="Логин" value="<?php echo @$data['login'] ?>" maxlength="20" required="true">
 			</div>
 
 			<div class="input-holder">

@@ -6,7 +6,7 @@
 		if (mysqli_num_rows($query) !== false) {
 			$user = mysqli_fetch_assoc($query);
 			$id = $user['id'];
-			if ($user['vkey'] == $vkey) {
+			if ($user['vkey'] == $vkey and $user['verified'] == 0) {
 				mysqli_query($connection, "UPDATE users SET verified = 1 WHERE `users`.`id` = $id");
 				echo 'Адрес электронной почты успешно подтвержден. Теперь нужно войти в ваш аккаунт';
 				header('Location: login.php');

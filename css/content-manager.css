@@ -27,13 +27,23 @@ form {
 	margin-right: 5px;
 	cursor: pointer;
 }
+.post-preview {
+	width: 100%;
+}
+.post-content {
+	margin: 0;
+	width: 100%;
+}
 .toptoolmenu a {
 	display: block;
 }
-@media screen and (min-width: 1101px) {
-
-	.toptoolmenu {
-		display: none;
-	}
+.versions {
+	width: 100%;
+	height: 200px;
+	overflow: auto;
+	margin-bottom: 10px;
 }
-
+.versions a {
+	display: block;
+	cursor: pointer;
+}

@@ -1,5 +1,5 @@
 About:
-	Final version for district step of olympiad
+	Version for republic
 	To run site, open file "index.php" on server
 	You can change your database settings (name, server, user, password) in "includes/connect.php"
 	You can create user account. For this click on the button "SIGN IN" on the top navigation panel
@@ -7,6 +7,9 @@ About:
 	Only user with login "admin" can create posts
 
 Requrements:
+
+	!important! THAT INFORMATION IS NOT UP TO DATE
+
 	-My SQL database (first in brackets - type, second in brackets (if exists) - value by default), can be found in "database/blog.sql"
 		-articles
 			-id (int, auto_increment)

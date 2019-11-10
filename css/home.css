@@ -1,4 +1,4 @@
-.category-wrapper {
+.category-container {
 	text-align: center;
 }
 .category-item {
@@ -7,18 +7,15 @@
 	display: inline-block;
 	width: 300px;
 	min-height: 300px;
-	margin: 10px;
-	padding: 5px;
-	border: 1px solid #171717;
-	border-radius: 10px;
+	padding: 0 5px 0 5px;
 }
 .cat-title {
 	font-weight: bold;
 	font-size: 1.2em;
 	margin-bottom: 10px;
 }
-.cat-description, .cat-title {
-	display: block;
+.cat-description {
+	text-align: center;
 }
 form, .about-project {
 	text-align: center;

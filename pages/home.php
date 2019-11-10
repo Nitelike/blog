@@ -15,15 +15,17 @@
 	<?php include '../includes/logo.php' ?>
 	<?php include '../includes/topnav.php' ?>
 	<?php include '../includes/topmenu.php' ?>
-	<div class="wrapper">
+	<div class="container wrapper">
 		<form method="get" action="../pages/search-results.php" autocomplete="off">
 			<input class="search-input" type="text" placeholder="Поиск" name="search_key" value="<?php if (isset($key)) {echo $key;} ?>" maxlength="25">
 			<button class="send-button" type="submit">Искать</button>
 		</form>	
-		<div class="subtitle">
+
+		<div class="header-subtitle">
 			<span>Категории</span>
 		</div>
-		<div class="category-wrapper">
+		
+		<div class="category-container">
 			<?php 
 				$categories = mysqli_query($connection, "SELECT * from `categories`");
 				if (mysqli_num_rows($categories) > 0) {
@@ -33,7 +35,9 @@
 							
 								<a href="category.php?cat=<?php echo $category['id'] ?>">
 									<span class="cat-title"><?php echo $category['title'] ?></span>
-									<span class="cat-description"><?php echo $category['description'] ?></span>
+									<div class="cat-description">
+										<span><?php echo $category['description'] ?></span>
+									</div>	
 								</a>			
 						</div>				
 						<?php

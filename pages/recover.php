@@ -10,7 +10,7 @@
 <body>
 	<?php include '../includes/topnav.php' ?>
 
-	<div class="wrapper">
+	<div class="container wrapper">
 		<?php 
 			$errors = array();
 			if (isset($_POST['recover'])) {	

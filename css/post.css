@@ -1,15 +1,8 @@
 .post {	
 	width: 100%;
-	padding: 10px;
-	margin-bottom: 10px;
-	background-color: #eeeee0;
-	border-radius: 10px;
 }
 .text-part {
 	margin-top: 10px;
-}
-.post-icon {
-	margin-right: 1%;
 }
 .post-info {
 	display: flex;
@@ -20,9 +13,6 @@
 }
 .post .categories a:hover {
 	color: #171717;
-}
-.post-icon {
-	height: 15vh;
 }
 .post-meta small, .post-meta a {
 	color: grey;
