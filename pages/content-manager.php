@@ -47,6 +47,7 @@
 							$query = mysqli_fetch_assoc($query);
 							$title = $query['title'];
 							$content = $query['description'];
+							$author = $query['last_author'];
 						}
 						else {
 							echo 'Нет такой категории';
@@ -61,7 +62,8 @@
 					$file = file($filename);
 					$title = $file[0];
 					$content = '';
-					for ($i=1; isset($file[$i]); $i++) { 
+					$author = $file[1];
+					for ($i=2; isset($file[$i]); $i++) { 
 						$content .= $file[$i];
 					}
 				}
@@ -83,6 +85,7 @@
 							$title = $query['title'];
 							$content = $query['text'];
 							$category_id = $query['category_id'];
+							$author = $query['last_author'];
 						}
 						else {
 							echo 'Нет такой статьи';
@@ -96,8 +99,9 @@
 					$filename = "../repo/articles/$id/" . $_GET['version'];
 					$file = file($filename);
 					$title = $file[0];
+					$author = $file[1];
 					$content = '';
-					for ($i=1; isset($file[$i]); $i++) { 
+					for ($i=2; isset($file[$i]); $i++) { 
 						$content .= $file[$i];
 					}
 
@@ -139,6 +143,14 @@
 		<?php } ?>
 
 			<div class="container wrapper">
+				<?php if (strpos($mode, 'update_') !== false) { ?> 
+				<div class="page_subtitle">
+					<span>Последний автор статьи</span>
+				</div>
+				<input id="author" type="text" name="author" placeholder="author>" readonly="true" value="<?php echo @$author ?>">
+				<br>
+				<?php } ?>
+
 				<div class="page_subtitle">
 					<span>
 						<?php echo $mode_name ?>
@@ -241,9 +253,14 @@
 						
 						if (isset($dir_files)) {
 							$files_count = count($dir_files);
+							$class = '';
 							for ($i=0; $i < $files_count; $i++) { 
 								if ($dir_files[$i] != '.' and $dir_files[$i] != '..') {
-									echo "<a title='год-месяц-число_час-минута-секунда' href='content-manager.php?version=$dir_files[$i]&mod=$mod&id=$id&mode=$mode'>" . str_replace('.txt', '', $dir_files[$i]) . "</a>";
+									if (strpos($_SERVER['REQUEST_URI'], $dir_files[$i]) !== false) {
+										$class = 'current_link';
+									}
+									echo "<a class='$class' title='год-месяц-число_час-минута-секунда' href='content-manager.php?version=$dir_files[$i]&mod=$mod&id=$id&mode=$mode'>" . str_replace('.txt', '', $dir_files[$i]) . "</a>";
+									$class = '';
 								}
 							}
 						}

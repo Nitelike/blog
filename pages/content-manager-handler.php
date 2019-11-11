@@ -3,6 +3,7 @@ include '../includes/config.php';
 include '../includes/get-user.php';
 require '../includes/vcs.php';
 if (isset($_SESSION['user']) and $user['status'] == 'editor' or $user['status'] == 'admin') {
+	$date = date('Y-m-d H:i:s', time());;
 	if (!empty($_POST['title'])) {
 		$title = $_POST['title'];
 		$title = str_replace('<h1>', '<span>', $title);
@@ -20,12 +21,12 @@ if (isset($_SESSION['user']) and $user['status'] == 'editor' or $user['status'] 
 			if (!empty($_POST['category'])) {
 				$categories = ' ' . $_POST['category'] . ',';				
 				if ($_POST['mode'] == 'create_article') {
-					$sql = "INSERT INTO articles (title, text, category_id) VALUES ('$title', '$text', '$categories')";
+					$sql = "INSERT INTO articles (title, text, category_id, last_author) VALUES ('$title', '$text', '$categories', '$user_name')";
 				}
 				else if ($_POST['mode'] == 'update_article') {
 					$update_post_id = $_POST['update_id'];
-					$sql = "UPDATE articles SET title = '$title', text = '$text', category_id = '$categories' WHERE `articles`.`id` = $update_post_id";
-					commit($update_post_id, $title, $text, 'article');
+					$sql = "UPDATE articles SET title = '$title', text = '$text', category_id = '$categories', last_author = '$user_name', pubdate = '$time' WHERE `articles`.`id` = $update_post_id";
+					commit($update_post_id, $title, $user_name, $text, 'article');
 				}
 			}
 			else {
@@ -33,11 +34,11 @@ if (isset($_SESSION['user']) and $user['status'] == 'editor' or $user['status'] 
 			}	
 		}
 		else if ($_POST['mode'] == 'add_category') {
-			$sql = "INSERT INTO categories (title, description) VALUES ('$title', '$text')";		
+			$sql = "INSERT INTO categories (title, description, last_author) VALUES ('$title', '$text', '$user_name')";		
 		}
 		else if ($_POST['mode'] == 'update_category') {
 			$update_category_id = $_POST['update_id'];
-			$sql = "UPDATE categories SET title = '$title', description = '$text' WHERE `id` = $update_category_id";
+			$sql = "UPDATE categories SET title = '$title', description = '$text', last_author = '$user_name', pubdate = '$date' WHERE `id` = $update_category_id";
 			commit($update_category_id, $title, $text, 'category');			
 		}
 		else if ($_POST['mode'] == 'find_for_delete') {
@@ -53,12 +54,12 @@ if (isset($_SESSION['user']) and $user['status'] == 'editor' or $user['status'] 
 				if ($_POST['mode'] == 'create_article') {
 					$mode = 'article';
 					$id = mysqli_fetch_assoc(mysqli_query($connection, "SELECT `id` FROM `articles` ORDER BY `id` DESC LIMIT 1"))['id'];
-					create($id, $title, $text, $mode);
+					create($id, $title, $user_name, $text, $mode);
 				}
 				else if ($_POST['mode'] == 'add_category') {
 					$mode = 'category';
 					$id = mysqli_fetch_assoc(mysqli_query($connection, "SELECT `id` FROM `categories` ORDER BY `id` DESC LIMIT 1"))['id'];
-					create($id, $title, $text, $mode);
+					create($id, $title, $user_name, $text, $mode);
 				}
 			}
 			else {

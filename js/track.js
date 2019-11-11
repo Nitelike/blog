@@ -1,13 +1,13 @@
-function Rating(id,type,target){
+function track(id){
     $.ajax({
         type:'POST',
-        url:'../includes/rating.php',
-        data:'mark-id='+id+'&mark-type='+type,
+        url:'../includes/track.php',
+        data:'track-id='+id,
         success:function(msg, jsg){
             if(msg == 'err'){
                 alert('Some problem occured, please try again.');
             }else{
-                $('#'+target).html(msg);
+                $('#track-'+id).html(msg);
             }
         }
     });

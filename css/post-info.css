@@ -27,13 +27,14 @@
 .likes, .dislikes, .views {
 	margin-right: 10px;
 }
-.likes button, .dislikes button {
+.track button {
+	font-size: 1em;
 	outline: none;
 	cursor: pointer;
 	border: 0;
 	background-color: transparent;
 }
-.likes button:hover, .dislikes button:hover {
+.track button:hover {
 	color: grey;
 }
 @media screen and (max-width: 768px) {

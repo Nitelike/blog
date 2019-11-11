@@ -47,3 +47,9 @@ form {
 	display: block;
 	cursor: pointer;
 }
+.current_link {
+	color: red;
+}
+.current_link:hover {
+	color: red;
+}

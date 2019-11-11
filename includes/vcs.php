@@ -21,17 +21,17 @@
 		return $dir;
 	}
 
-	function commit($id, $title, $text, $mode) {
+	function commit($id, $title, $author, $text, $mode) {
 		date_default_timezone_set('Europe/Minsk');
 		$dir = setMode($mode);
-		$new_text = "$title\r\n$text";
+		$new_text = "$title\r\n$author\r\n$text";
 		$file_path = "../repo/$dir/$id/" . date("Y-m-d_H-i-s") . '.txt';
 		if (!file_put_contents($file_path, $new_text)) {
 			echo 'Невозможно создать резервный файл';
 		}
 	}
 
-	function create($id, $title, $text, $mode) {
+	function create($id, $title, $author, $text, $mode) {
 		init();
 		$dir = setMode($mode);	
 		if (!file_exists("../repo/$dir/$id")) {
@@ -39,6 +39,6 @@
 				echo 'Невозможно создать каталог';
 			}
 		}
-		commit($id, $title, $text, $mode);	
+		commit($id, $title, $author, $text, $mode);	
 	}
 	

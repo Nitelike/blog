@@ -9,6 +9,9 @@
 		<li><a href="login.php">ВХОД</a></li>
 		<?php } else { 
 		?>
+		<?php if (isset($_SESSION['user'])) { ?>
+		<li><a href="tracked.php">ИЗБРАННЫЕ</a></li>
+		<?php } ?>
 		<li><a href="user.php"><?php echo htmlentities($user['name'], ENT_QUOTES) ?></a></li>
 		<?php } ?>
 		<?php if (isset($_SESSION['user'])) {?>
