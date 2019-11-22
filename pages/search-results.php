@@ -35,12 +35,12 @@
 					while ($post = mysqli_fetch_assoc($result)) {
 						if (strpos(mb_strtolower($post['title']), mb_strtolower($key)) !== false or strpos(mb_strtolower($post['text']), mb_strtolower($key)) !== false) {
 							$src = -1;
-							$index = strpos($post['text'], '<img src="');
+							$index = strpos($post['text'], '<img src=');
 							if ($index !== false) {
 								$index += 10;
-								$last_index = strpos(substr($post['text'], $index), '"');
+								$last_index = strpos(substr($post['text'], $index), '>');
 								if ($last_index !== false) {
-									$src = substr($post['text'], $index, $last_index);
+									$src = substr($post['text'], $index, $last_index - 8);
 								}
 							}
 							?>
