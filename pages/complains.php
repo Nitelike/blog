@@ -1,24 +1,33 @@
+<?php require '../includes/config.php' ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-	<?php require '../includes/config.php' ?>
 	<?php require '../includes/get-user.php'; if(isset($_SESSION['user']) and @$user['status'] == 'admin' or @$user['status'] == 'editor') { ?>
 	<meta charset="UTF-8">
-	<title><?php echo $params['title'] ?> - Сообщения</title>	
+	<title>Сообщения - <?php echo $params['title'] ?></title>	
 	<?php include '../includes/common-header.php' ?>
 	<link rel="stylesheet" type="text/css" href="../css/users.css">
 </head>
 <body>
-	<?php include '../includes/topnav.php' ?>
+	<?php include '../includes/header.php' ?>
 
-	<div class="toptoolmenu container wrapper">
-		<?php include '../includes/content-manager-aside-content.php' ?>
-	</div>
+			<aside><?php 
+				function currentUrl($url)
+				{
+					if (strpos($_SERVER['REQUEST_URI'], $url) !== false) {
+						echo 'current-page';
+					}
+				}
+			include '../includes/user-page-aside.php';
+				
+			?></aside>
 
-	<div class="header-subtitle">
-		<span>Сообщения</span>
-	</div>
-		<div class="container">
+			<div class="additional"><?php include '../includes/user-page-aside.php'; ?></div>
+
+		<section class="side-section">
+			<div class="page_subtitle">
+				<span>Сообщения</span>
+			</div>
 
 			<?php 
 				if (isset($_GET['delete-complain'])) {
@@ -55,15 +64,13 @@
 				}	
 				else {
 					?>
-						<div class="header-subtitle">
-							<span>
-								Нет сообщений
-							</span>
+						<div class="page_subtitle">
+							<span>Нет сообщений</span>
 						</div>
 					<?php
 				}	
 		?>
-	</div>
+	</section>
 </body>
 </html>
 <?php mysqli_close($connection) ?>

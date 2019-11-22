@@ -1,16 +1,16 @@
+<?php require '../includes/config.php' ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-	<?php require '../includes/config.php' ?>
 	<meta charset="UTF-8">
-	<title><?php echo $params['title'] ?> - Регистрация</title>	
+	<title>Регистрация - <?php echo $params['title'] ?></title>	
 	<?php include '../includes/common-header.php' ?>
 	<link rel="stylesheet" type="text/css" href="../css/login.css?version=1.0">
 </head>
 <body>
-	<?php include '../includes/topnav.php' ?>
+	<?php include '../includes/header.php' ?>
 
-	<div class="container wrapper">
+	<section>
 		<?php 
 			if (isset($_POST['to_register'])) {
 				$errors = array();
@@ -80,29 +80,37 @@
 		?>
 
 		<form action="register.php" method="post">
-			<div class="input-holder">
-				<input name="login" type="text" placeholder="Логин" value="<?php echo @$data['login'] ?>" maxlength="20" required="true">
-			</div>
+			<table>
+				<tr>
+					<td><label for="login"></label>Логин</td>
+					<td><input name="login" type="text" value="<?php echo @$data['login'] ?>" maxlength="20" required="true"></td>
+				</tr>
 
-			<div class="input-holder">
-				<input name="password" type="password" placeholder="Пароль" value="<?php echo @$data['password'] ?>" maxlength="30" required="true">
-			</div>
+				<tr>
+					<td><label for="password">Пароль</label></td>
+					<td><input name="password" type="password" value="<?php echo @$data['password'] ?>" maxlength="30" required="true"></td>
+				</tr>
 
-			<div class="input-holder">
-				<input name="password-2" type="password" placeholder="Подтвердите пароль" value="<?php echo @$data['password-2'] ?>" maxlength="30" required="true">
-			</div>
+				<tr>
+					<td><label for="password-2">Повторите пароль</label></td>
+					<td><input name="password-2" type="password" value="<?php echo @$data['password-2'] ?>" maxlength="30" required="true"></td>
+				</tr>
 
-			<div class="input-holder">
-				<input name="email" type="email" placeholder="Адрес электронной почты" value="<?php echo @$data['email'] ?>" required="true">
-			</div>
+				<tr>
+					<td><label for="email">Адрес электронной почты</label></td>
+					<td><input name="email" type="email" value="<?php echo @$data['email'] ?>" required="true"></td>
+				</tr>
 
-			<div class="input-holder">
-				<button class="send-button" name="to_register" type="submit">Зарегистрировать</button>
-			</div>	
+				<tr>
+					<td><button class="send-button" name="to_register" type="submit">Зарегистрировать</button></td>
+				</tr>
+			</table>
 		</form>
+
+		<br>
 		
 		<span>Если у вас уже есть аккаунт, Вы можете просто <a class="inform-link" href="login.php">войти</a> в него</span>		
-	</div>	
+	</section>	
 </body>
 </html>
 <?php mysqli_close($connection) ?>

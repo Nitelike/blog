@@ -5,7 +5,6 @@
 		if (mysqli_num_rows($user) !== false) {
 			$user = mysqli_fetch_assoc($user);
 			$user_name = $user['name'];
-			$user_icon = $user['image_url'];
 		}
 	}
 	

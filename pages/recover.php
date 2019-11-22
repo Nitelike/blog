@@ -1,16 +1,16 @@
+<?php require '../includes/config.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<?php require '../includes/config.php' ?>
 	<meta charset="UTF-8">
 	<title><?php echo $params['title'] ?> - Восстановление</title>	
 	<?php include '../includes/common-header.php' ?>
 	<link rel="stylesheet" type="text/css" href="../css/login.css?version=1.0">
 </head>
 <body>
-	<?php include '../includes/topnav.php' ?>
+	<?php include '../includes/header.php' ?>
 
-	<div class="container wrapper">
+	<section>
 		<?php 
 			$errors = array();
 			if (isset($_POST['recover'])) {	
@@ -95,18 +95,20 @@
 			</div>
 			
 			<div class="input-holder">
-				<label for="email">Введите адрес электронной почты, который вы указывали при регистрации на сайте. На этот адрес будет выслан логин или пароль (то, что вы выбрали) от вашего аккаунта</label>
+				<label for="email">Введите адрес электронной почты, который вы указывали при регистрации на сайте</label>
 			</div>
-
-			<div class="input-holder">
-				<input name="email" type="email" placeholder="Адрес электронной почты" value="<?php echo @$data['email'] ?>" required="true">
-			</div>
-
-			<div class="input-holder">
-				<button class="send-button" name="recover" type="submit">Отправить письмо</button>
-			</div>	
+			
+			<table>
+				<tr>
+					<td><label for="email">Адрес электронной почты</label></td>
+					<td><input name="email" type="email" value="<?php echo @$data['email'] ?>" required="true"></td>
+				</tr>
+				<tr>
+					<td><button class="send-button" name="recover" type="submit">Отправить письмо</button></td>
+				</tr>
+			</table>
 		</form>	
-	</div>	
+	</section>	
 </body>
 </html>
 <?php mysqli_close($connection) ?>

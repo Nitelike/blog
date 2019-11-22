@@ -8,7 +8,7 @@
 		<html lang="ru">
 		<head>
 			<meta charset="UTF-8">
-			<title><?php echo $params['title'] ?> - Пользователи</title>	
+			<title>Пользователи - <?php echo $params['title'] ?></title>	
 			<?php include '../includes/common-header.php' ?>
 			<link rel="stylesheet" type="text/css" href="../css/users.css">
 			<script src="../js/jquery-3.4.1.min.js"></script>
@@ -16,13 +16,33 @@
 			<script src="../js/block.js"></script>
 		</head>
 		<body>
-			<?php include '../includes/topnav.php' ?>
+			<?php include '../includes/header.php' ?>
 
-			<div class="toptoolmenu container wrapper">
-				<?php include '../includes/content-manager-aside-content.php' ?>
-			</div>
+			<aside><?php 
+				function currentUrl($url)
+				{
+					if (strpos($_SERVER['REQUEST_URI'], $url) !== false) {
+						echo 'current-page';
+					}
+				}
+			include '../includes/user-page-aside.php';
+				
+			?></aside>
+
+			<div class="additional"><?php include '../includes/user-page-aside.php'; ?></div>
 			
-			<div class="container">
+			<section class="side-section">
+				<form action="users.php" method="get">
+					<input  name="search-user" type="text" placeholder="Поиск по пользователям" value="<?php echo @$_GET['search-user'] ?>">
+					<button class="send-button">Поиск</button>
+				</form>
+
+				<br>
+
+				<div class="page_subtitle">
+					<span>Пользователи</span>
+				</div>
+
 				<table>
 					<tr>
 						<th>Логин</th>
@@ -33,8 +53,20 @@
 						<th>Изменить статус</th>
 						<th>Блокировка</th>
 					</tr>
-					<?php 
-						$users = mysqli_query($connection, "SELECT * FROM `users` ORDER BY `name`");
+					<?php
+						if (!isset($_GET['search-user'])) {
+							$users = mysqli_query($connection, "SELECT * FROM `users` ORDER BY `name`");
+						}
+						else {
+							$search_user = mysqli_real_escape_string($connection, trim($_GET['search-user']));
+							if ($search_user) {
+								$users = mysqli_query($connection, "SELECT * FROM `users` WHERE `name` = '$search_user'");
+							}
+							else {
+								$users = mysqli_query($connection, "SELECT * FROM `users` ORDER BY `name`");
+							}
+						} 
+
 						if (mysqli_num_rows($users) > 0) {
 							while ($other_user = mysqli_fetch_assoc($users)) { ?>
 								<tr>
@@ -58,10 +90,17 @@
 								<?php
 							}
 						}
+						else { ?>
+							<div class="page_subtitle">
+								<span>
+									Нет пользователей
+								</span>
+							</div>
+						<?php }
 						
 					?>
 				</table>
-			</div>	
+			</section>	
 		</body>
 		</html>
-<?php }?>
+<?php } ?>

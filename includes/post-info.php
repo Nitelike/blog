@@ -7,21 +7,14 @@
 	<div>
 		<small class="categories">
 			<?php
-				$categories = mysqli_query($connection, 'SELECT * FROM `categories`');
-				if (mysqli_num_rows($categories) > 0)
-					$post_categories = $post['category_id'];
-					$counter = 0;
-					while ($cat = mysqli_fetch_assoc($categories)) {
-						if (strpos($post_categories, ' ' . $cat['id'] . ',') !== false) {
-							if ($counter >= 1) {
-								echo ',';
-							}
-							?>
-							<a href="category.php?cat=<?php echo $cat['id'] ?>"><?php echo $cat['title'] ?></a><?php
-							$counter++;
-						}				
-					}
-			?>
+				$post_category = str_replace(' ', '', $post['category_id']);
+				$post_category = str_replace(',', '', $post['category_id']);
+				$post_category = intval($post_category);
+				$cat = mysqli_query($connection, "SELECT * FROM `categories` WHERE `id` = $post_category");
+				if (mysqli_num_rows($cat) > 0) { $cat = mysqli_fetch_assoc($cat); ?>
+
+				<a href="category.php?cat=<?php echo $cat['id'] ?>"><?php echo $cat['title'] ?></a>	
+			<?php } ?>
 		</small>
 		<div class="post-meta">
 			<span class="track"><button id="track-<?php echo $post['id'] ?>" type="button" onclick="track(<?php echo $post['id'] ?>)">

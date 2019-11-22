@@ -9,7 +9,7 @@
 			if ($user['vkey'] == $vkey and $user['verified'] == 0) {
 				mysqli_query($connection, "UPDATE users SET verified = 1 WHERE `users`.`id` = $id");
 				echo 'Адрес электронной почты успешно подтвержден. Теперь нужно войти в ваш аккаунт';
-				header('Location: login.php');
+				echo "<script>window.location.href='login.php';</script>";
 			}
 			else {
 				echo 'Неправильный ключ подтверждения';

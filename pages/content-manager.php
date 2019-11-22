@@ -1,7 +1,7 @@
+<?php require '../includes/config.php' ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-	<?php require '../includes/config.php' ?>
 	<meta charset="UTF-8">
 	<title><?php echo $params['title'] ?> - Создать статью</title>	
 	<?php include '../includes/get-user.php'; if (isset($_SESSION['user']) and $user['status'] == 'editor' or $user['status'] == 'admin') { ?>
@@ -12,7 +12,14 @@
 </head>
 <body>
 	<?php
-		include '../includes/topnav.php';
+	function currentUrl($url)
+				{
+					if (strpos($_SERVER['REQUEST_URI'], $url) !== false) {
+						echo 'current-page';
+					}
+				}
+		include '../includes/header.php';
+		include '../includes/vcs.php';
 		$mode = $_GET['mode'];
 		if ($mode == 'create_article') {
 			$mode_name = 'Добавить статью';
@@ -23,6 +30,11 @@
 			$mode_name = 'Добавить категорию';
 			$title_placeholder = 'Название';
 			$textarea_placeholder = "Описание категории";
+		}
+		else if ($mode == 'add_district') {
+			$mode_name = 'Добавить область';
+			$title_placeholder = 'Название';
+			$textarea_placeholder = "Описание области";
 		}
 		else if ($mode == 'find_for_delete') {
 			$mode_name = 'Удалить';
@@ -36,101 +48,49 @@
 			$mode_name = 'Изменить категорию';
 			$title_placeholder = 'Название';
 			$textarea_placeholder = "Описание категории";
-
-			$id = mysqli_real_escape_string($connection, trim($_GET['id']));
-			if ($id != '') {
-				if (!isset($_GET['version']) or !isset($_GET['mod'])) {
-					$sql = "SELECT * FROM `categories` WHERE `id` = $id";
-					$query = mysqli_query($connection, $sql);
-					if ($query) {
-						if (mysqli_num_rows($query) !== false) {
-							$query = mysqli_fetch_assoc($query);
-							$title = $query['title'];
-							$content = $query['description'];
-							$author = $query['last_author'];
-						}
-						else {
-							echo 'Нет такой категории';
-						}
-					}
-					else {
-						echo mysqli_error($connection);
-					}
-				}
-				else if ($_GET['mod'] == 'category') {
-					$filename = "../repo/categories/$id/" . $_GET['version'];
-					$file = file($filename);
-					$title = $file[0];
-					$content = '';
-					$author = $file[1];
-					for ($i=2; isset($file[$i]); $i++) { 
-						$content .= $file[$i];
-					}
-				}
-			}			
+			$res = getContent('category');
+			$title = $res['title'];
+			$author = $res['author'];
+			$content =  $res['content'];
 		}
 		else if ($mode == 'update_article') {
 			$mode_name = 'Изменить статью';
 			$title_placeholder = 'Название';
 			$textarea_placeholder = "Контент";
 
-			$id = mysqli_real_escape_string($connection, trim($_GET['id']));
-			if ($id != '') {
-				if (!isset($_GET['version']) or !isset($_GET['mod'])) {
-					$sql = "SELECT * FROM `articles` WHERE `id` = $id";
-					$query = mysqli_query($connection, $sql);
-					if ($query) {
-						if (mysqli_num_rows($query) !== false) {
-							$query = mysqli_fetch_assoc($query);
-							$title = $query['title'];
-							$content = $query['text'];
-							$category_id = $query['category_id'];
-							$author = $query['last_author'];
-						}
-						else {
-							echo 'Нет такой статьи';
-						}
-					}
-					else {
-						echo mysqli_error($connection);
-					}
-				}
-				else if ($_GET['mod'] == 'article') {
-					$filename = "../repo/articles/$id/" . $_GET['version'];
-					$file = file($filename);
-					$title = $file[0];
-					$author = $file[1];
-					$content = '';
-					for ($i=2; isset($file[$i]); $i++) { 
-						$content .= $file[$i];
-					}
+			$res = getContent('article');
+			$title = $res['title'];
+			$author = $res['author'];
+			$content =  $res['content'];
 
-					$sql = "SELECT * FROM `articles` WHERE `id` = $id";
-					$query = mysqli_query($connection, $sql);
-					if ($query) {
-						if (mysqli_num_rows($query) !== false) {
-							$query = mysqli_fetch_assoc($query);
-							$category_id = $query['category_id'];
-						}
-						else {
-							echo 'Нет такой статьи';
-						}
-					}
-					else {
-						echo mysqli_error($connection);
-					}
-				}
-			}	
+			$category_id = $res['category_id'];
+			$district_id = $res['district_id'];
+			$lat = $res['lat'];
+			$lng = $res['lng'];
+		}
+		else if ($mode == 'update_district') {
+			$mode_name = 'Изменить область';
+			$title_placeholder = 'Название';
+			$textarea_placeholder = "Описание";
+
+			$res = getContent('district');
+			$title = $res['title'];
+			$author = $res['author'];
+			$content =  $res['content'];
 		}
 		?>
-		<div class="toptoolmenu container wrapper">
-			<?php include '../includes/content-manager-aside-content.php' ?>
+		<aside>
+			<?php include '../includes/user-page-aside.php'; ?>
+		</aside>
+
+		<div class="additional">
+			<?php include '../includes/user-page-aside.php'; ?>
 		</div>
 
-		<div class="container wrapper">
+		<section class="side-section">
 		<?php
-		if ($mode == 'create_article' or $mode == 'update_article') { ?>
-			<div class="container wrapper">
+		if ($mode == 'create_article' or $mode == 'update_article' or $mode == 'add_district' or $mode == 'update_district' or $mode == 'update_category' or $mode == 'add_category') { ?>
+			<div>
 				<div class="page_subtitle">
 					<span>
 						Предпросмотр статьи
@@ -140,14 +100,16 @@
 					<div class="post-content" id="post-prew"></div>		
 				</article>
 			</div>
+			<br>
 		<?php } ?>
 
-			<div class="container wrapper">
+			<div>
 				<?php if (strpos($mode, 'update_') !== false) { ?> 
 				<div class="page_subtitle">
 					<span>Последний автор статьи</span>
 				</div>
-				<input id="author" type="text" name="author" placeholder="author>" readonly="true" value="<?php echo @$author ?>">
+				
+				<input id="author" type="text" name="author" placeholder="author" readonly="true" value="<?php echo @$author ?>">
 				<br>
 				<?php } ?>
 
@@ -158,10 +120,10 @@
 				</div>
 				<form action="content-manager-handler.php" method="post" autocomplete="off">
 					<input name="mode" value="<?php echo $mode ?>" class="disabled">
-					<input name="update_id" value="<?php echo @$id ?>"  class="disabled">
+					<input name="update_id" value="<?php echo $_GET['id'] ?>"  class="disabled">
 					<input id="title" type="text" name="title" placeholder="<?php echo $title_placeholder ?>" required="true" value="<?php echo @$title ?>">
 					<?php
-						if ($mode == 'create_article' or $mode == 'update_article') {
+						if ($mode == 'create_article' or $mode == 'update_article' or $mode == 'add_district' or $mode == 'update_district' or $mode == 'update_category' or $mode == 'add_category') {
 							?>
 							<script src="../js/fill-preview.js"></script>
 							<script src="../js/add-tag.js"></script>			
@@ -180,11 +142,26 @@
 
 							<textarea id="post-text" name="text" type="text" placeholder="<?php echo $textarea_placeholder ?>" required="true" spellcheck="true"><?php echo @$content ?></textarea>
 
+							<?php if (strpos($mode, 'article') !== false) { ?>
+							<div class="page_subtitle">
+								<span>
+									Введите координаты объекта:
+								</span>
+							</div>
+
+							<span>Для поиска координат можно воспользоваться <a target="blank" href="https://www.gpsies.com/coordinate.do?language=ru">сервисом по нахождению координат</a></span> <br> <br>
+
+							<input type="text" name="lat" placeholder="Ширина" value="<?php echo @$lat; ?>">
+							<input type="text" name="lng" placeholder="Долгота" value="<?php echo @$lng; ?>">
+							
+							<br> <br>
+
 							<div class="page_subtitle">
 								<span>
 									Выберите категории для статьи:
 								</span>
 							</div>
+							
 							<div class="categories-variants">
 								<?php 
 									$categories = mysqli_query($connection, "SELECT * from `categories`");
@@ -192,7 +169,7 @@
 										while ($category = mysqli_fetch_assoc($categories)) {
 											?>
 											<div class="category-variant">
-												<input <?php if ($mode == 'update_article' and strpos($category_id, ' ' . $category['id'] . ',') !== false) { echo 'checked'; } else if ($mode != 'update_article') { echo 'checked'; } ?> class="category-box" type="radio" name="category" value="<?php echo $category['id'] ?>">
+												<input <?php if ($mode == 'update_article' and strpos($category_id, $category['id']) !== false) { echo 'checked'; } else if ($mode != 'update_article') { echo 'checked'; } ?> class="category-box" type="radio" name="category" value="<?php echo $category['id'] ?>">
 												<label class="category-title" for="category"><?php echo $category['title'] ?></label>
 											</div>					
 											<?php
@@ -200,26 +177,50 @@
 									}
 								?>
 							</div>
-							<?php
-						}
-						else if ($mode == 'update_category' or $mode == 'add_category') {
-							?>
-							<textarea id="category-description" name="text" type="text" placeholder="<?php echo $textarea_placeholder ?>" required="true" maxlength="255"><?php echo @$content ?></textarea>
+								
+							<br>
+
+							<div class="page_subtitle">
+								<span>
+									Выберите область для статьи:
+								</span>
+							</div>
+							
+							<div class="categories-variants">
+								<?php 
+									$districts = mysqli_query($connection, "SELECT * from `districts`");
+									if (mysqli_num_rows($districts) > 0) {
+										while ($district = mysqli_fetch_assoc($districts)) {
+											?>
+											<div class="category-variant">
+												<input <?php if ($mode == 'update_article' and strpos($district_id, $district['id']) !== false) { echo 'checked'; } ?> class="category-box" type="radio" name="district" value="<?php echo $district['id'] ?>">
+												<label class="category-title" for="district"><?php echo $district['title'] ?></label>
+											</div>					
+											<?php
+										}
+									}
+								?>
+							</div>
+
+							<?php } ?>
 							<?php
 						}
 
-						if ($mode == 'add_category' or $mode == 'create_article') {
+						if ($mode == 'add_category' or $mode == 'create_article' or $mode == 'add_district') {
 							?>
+							<br>
 							<button class="send-button">Создать</button>
 							<?php
 						}
-						else if ($mode == 'update_article' or $mode == 'update_category') {
+						else if ($mode == 'update_article' or $mode == 'update_category' or $mode == 'update_district') {
 							?>
+							<br>
 							<button class="send-button">Изменить</button>
 							<?php
 						}
 						else if (($mode == 'find_for_delete' and $user['status'] == 'admin') or $mode == 'update') {
 							?>
+							<br>
 							<button class="send-button" type="submit">Найти</button>
 							<?php
 						}
@@ -228,16 +229,17 @@
 
 			</div>
 			<?php
-			if ($mode == 'update_article' or $mode == 'update_category') { ?>
+			if ($mode == 'update_article' or $mode == 'update_category' or $mode == 'update_district') { ?>
 				<br>
 				<div class="page_subtitle">
 					<span>
-						Версии статьи
+						Версии
 					</span>
 				</div>
 
 				<div class="versions">
 					<?php
+						$id = $_GET['id'];
 						if ($mode == 'update_article') {
 							$search_dir = "../repo/articles/$id";
 							$mod = 'article';
@@ -246,9 +248,15 @@
 							$search_dir = "../repo/categories/$id";
 							$mod = 'category';
 						}
+						else if ($mode == 'update_district') {
+							$search_dir = "../repo/districts/$id";
+							$mod = 'district';
+						}
 
 						if (file_exists($search_dir)) {
+
 							$dir_files = scandir($search_dir, SCANDIR_SORT_DESCENDING);
+
 						}
 						
 						if (isset($dir_files)) {
@@ -265,12 +273,12 @@
 							}
 						}
 						else {
-							echo 'Других версий этой статьи не существует';
+							echo 'Других версий не существует';
 						}
 					?>
 				</div>
 			<?php } ?>
-		</div>
+		</section>
 	</body>
 </html>
 <?php mysqli_close($connection) ?>

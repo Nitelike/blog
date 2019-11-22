@@ -1,37 +1,17 @@
 <nav>
 	<?php require '../includes/get-user.php' ?>
+	<?php require '../includes/menu-manager.php' ?>
 	<ul class="topnav">
-		<li><a href="home.php">ГЛАВНАЯ</a></li>
-		<?php if (isset($_SESSION['user']) and @$user['status'] == 'editor' or @$user['status'] == 'admin') { ?>
-		<li><a href="content-manager.php?mode=create_article">УПРАВЛЕНИЕ</a></li>
-		<?php }?>	
-		<?php if (!isset($_SESSION['user'])) { ?>
-		<li><a href="login.php">ВХОД</a></li>
-		<?php } else { 
+		<?php
+			$categories = mysqli_query($connection, "SELECT `title`, `id` FROM `categories` ORDER BY `id` ASC");
+			while ($cat = mysqli_fetch_assoc($categories)) { 
+				$id = $cat['id'];
+				?>
+				<li><a href="category.php?cat=<?php echo $id ?>" <?php cur_page("category.php?cat=" . $id) ?>><?php echo $cat['title'] ?></a></li>
+			<?php }
+
+
 		?>
-		<?php if (isset($_SESSION['user'])) { ?>
-		<li><a href="tracked.php">ИЗБРАННЫЕ</a></li>
-		<?php } ?>
-		<li><a href="user.php"><?php echo htmlentities($user['name'], ENT_QUOTES) ?></a></li>
-		<?php } ?>
-		<?php if (isset($_SESSION['user'])) {?>
-		<li><a href="<?php echo $user_icon ?>" target="_blank"><img src="<?php 
-			if ($user_icon != null) {
-				echo $user_icon;
-			}
-			else {
-				echo '../images/user.png';
-			}
-		?>" alt="icon" class="icon"></a></li>
-	<?php }
-		if (strpos($_SERVER['REQUEST_URI'], 'home') !== false) { ?>
-		<li><button id="menu-icon" class="send-button" type="button" onclick="showMenu()"><span>&#9776;</span></button></li>
-	<?php } ?>
-		<script>
-		   function fullwindowpopup(){
-		      window.open("complain.php","Сообщение","width=500,height=330,scrollbars")
-		   }
-		</script>
-		<li><button id="complain-button" title="Сообщить о проблеме модераторам" type="button" onclick="fullwindowpopup()">!</button></li>
+		
 	</ul>
 </nav>

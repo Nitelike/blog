@@ -9,4 +9,4 @@
 		die('Connection failed: ' . mysqli_connect_error());
 	}
 	mysqli_set_charset($connection, 'utf8');
-	session_start();
+	

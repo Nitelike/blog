@@ -1,51 +1,63 @@
+<?php require '../includes/config.php' ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-	<?php require '../includes/config.php' ?>
 	<meta charset="UTF-8">
-	<title><?php echo $params['title'] ?> - Главная</title>	
+	<title>Главная - <?php echo $params['title'] ?></title>	
 	<?php include '../includes/common-header.php' ?>
-	<link rel="stylesheet" type="text/css" href="../css/home.css?version=1.0">
 	<link rel="stylesheet" type="text/css" href="../css/post-info.css?version=1.0">	
 	<link rel="stylesheet" type="text/css" href="../css/post.css?version=1.0">
-	<link rel="stylesheet" type="text/css" href="../css/logo.css?version=1.0">
 	<script src="../js/menu-button.js"></script>
+	<script defer src="../js/jquery-3.4.1.min.js"></script>
+	<script defer src="https://api-maps.yandex.ru/2.1/?apikey=510578c1-b38f-432c-a73c-fb2cc14ae5a2&lang=ru_RU" type="text/javascript">
+    </script>
 </head>
 <body>
-	<?php include '../includes/logo.php' ?>
-	<?php include '../includes/topnav.php' ?>
-	<?php include '../includes/topmenu.php' ?>
-	<div class="container wrapper">
-		<form method="get" action="../pages/search-results.php" autocomplete="off">
-			<input class="search-input" type="text" placeholder="Поиск" name="search_key" value="<?php if (isset($key)) {echo $key;} ?>" maxlength="25">
-			<button class="send-button" type="submit">Искать</button>
-		</form>	
+	<?php include '../includes/home-header.php' ?>
+	<section>
+	<div id="map" style="width: 100%; height: 90vh;"></div>
+	</section>
+	<script type="module">
+	    // Функция ymaps.ready() будет вызвана, когда
+	    // загрузятся все компоненты API, а также когда будет готово DOM-дерево.
+	    ymaps.ready(init);
+	    function init(){
+	        var myMap = new ymaps.Map("map", {
+		    center: [53.89911389, 28.13402537],
+		    zoom: 6
+		});
 
-		<div class="header-subtitle">
-			<span>Категории</span>
-		</div>
-		
-		<div class="category-container">
-			<?php 
-				$categories = mysqli_query($connection, "SELECT * from `categories`");
-				if (mysqli_num_rows($categories) > 0) {
-					while ($category = mysqli_fetch_assoc($categories)) {
-						?>
-						<div class="category-item">
-							
-								<a href="category.php?cat=<?php echo $category['id'] ?>">
-									<span class="cat-title"><?php echo $category['title'] ?></span>
-									<div class="cat-description">
-										<span><?php echo $category['description'] ?></span>
-									</div>	
-								</a>			
-						</div>				
-						<?php
-					}
-				}
-			?>
-		</div>
-	</div>
+	    var myGeoObjects = [];
+
+	    $.ajax({
+	        type:'POST',
+	        url:'../includes/get-art-data.php',
+	        success:function(msg, jsg){
+	            if(msg == 'err'){
+	                alert('Some problem occured, please try again.');
+	            }else{
+	                var geoObjects = JSON.parse(msg);
+	                for (var i = 0; i < geoObjects.length; i++) {
+	                	myGeoObjects[i] = new ymaps.GeoObject({
+						    geometry: {
+						      type: "Point",
+						      coordinates: [parseFloat(geoObjects[i].lat), parseFloat(geoObjects[i].lng)]
+						    },
+						    properties: {
+						      clusterCaption: geoObjects[i].title,
+						      balloonContentBody: "<div class='point-image' style='background-image: url(" + geoObjects[i].image + ");'></div>" + "<a style='word-wrap: break-word;' href='article.php?id=" + parseInt(geoObjects[i].id) + "'>" + geoObjects[i].title + "</a>"
+						    }
+						});
+	                }
+	                var myClusterer = new ymaps.Clusterer({clusterDisableClickZoom: true});
+					myClusterer.add(myGeoObjects);
+					myMap.geoObjects.add(myClusterer);
+	            }
+	        }
+	    });
+
+	  }
+	</script>
 </body>
 </html>
 <?php mysqli_close($connection) ?>

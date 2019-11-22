@@ -1,21 +1,38 @@
+<?php require '../includes/config.php' ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-	<?php require '../includes/config.php' ?>
 	<meta charset="UTF-8">
-	<title><?php echo $params['title'] ?> - Избранные</title>	
+	<title>Избранные - <?php echo $params['title'] ?></title>	
 	<?php include '../includes/common-header.php' ?>
-	<link rel="stylesheet" type="text/css" href="../css/home.css?version=1.0">
 	<link rel="stylesheet" type="text/css" href="../css/post-info.css?version=1.0">	
 	<link rel="stylesheet" type="text/css" href="../css/post.css?version=1.0">
 	<link rel="stylesheet" type="text/css" href="../css/category.css">
 </head>
 <body>
-	<?php include '../includes/topnav.php' ?>
-		<div class="header-subtitle">
-			<span>Избраные статьи</span>
-		</div>
-		<div class="container">
+	<?php include '../includes/header.php' ?>
+
+		<aside><?php 
+				function currentUrl($url)
+				{
+					if (strpos($_SERVER['REQUEST_URI'], $url) !== false) {
+						echo 'current-page';
+					}
+				}
+			include '../includes/user-page-aside.php';
+				
+		?></aside>
+
+		<div class="additional"><?php include '../includes/user-page-aside.php'; ?></div>
+
+		<section class="side-section">
+			<div class="page_subtitle">
+				<span>Избраные статьи</span>
+			</div>
+			<hr>
+			<br>
+			<div class="category-container">
+			
 
 			<?php 			
 				$counter = 0;
@@ -33,22 +50,17 @@
 								}
 							}
 							?>
-							<div class="content-col">
+							<div class="block-article">
 								<?php
-									if ($src != -1) { ?>
-										<div class="image-wrapper">
-											<a href="article.php?id=<?php echo $post['id'] ?>">
-												<img class="article-icon" src="<?php echo $src ?>" alt="article-icon">
-											</a>	
-										</div>
+									if ($src != -1) { $counter++; ?>
+										<a href="article.php?id=<?php echo $post['id'] ?>">
+											<div class="image-handler" style="background-image: url(<?php echo $src ?>);">												
+											</div>
+										</a>
+										<span class="blog-title">
+										<a href="article.php?id=<?php echo $post['id'] ?>"><?php echo $post['title'] ?></a></span>
 									<?php } ?>
-								
-								<?php 
-									include '../includes/post.php';	
-									$counter++;	
-								?>
 
-								<a class="button-link" href="article.php?id=<?php echo $post['id'] ?>">Читать дальше</a>
 							</div>
 							<?php
 						}								
@@ -56,15 +68,14 @@
 				}
 				if ($counter < 1) {
 					?>
-						<div class="wrapper header-subtitle">
 							<span>
 								Вы не выбрали статей
 							</span>
-						</div>
 					<?php
 				}	
 		?>
 	</div>
+	</section>
 </body>
 </html>
 <?php mysqli_close($connection) ?>

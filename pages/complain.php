@@ -1,15 +1,14 @@
+<?php require '../includes/config.php' ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-	<?php require '../includes/config.php' ?>
 	<meta charset="UTF-8">
 	<title><?php echo $params['title'] ?> - Сообщение администратору</title>	
 	<?php include '../includes/common-header.php' ?>
 	<link rel="stylesheet" type="text/css" href="../css/login.css">
 </head>
 <body>
-
-	<div class="container wrapper">
+	<section>
 		<?php 
 			if (isset($_SESSION['user'])) {
 				include '../includes/get-user.php';
@@ -59,7 +58,7 @@
 		<span>Это сообщение будет отправлено редакторам и администраторам сайта</span>
 		<br>
 		<span>Адрес электронной почты нужен только для обратной связи. Но его можно не указывать</span>
-	</div>	
+	</section>	
 </body>
 </html>
 <?php mysqli_close($connection) ?>

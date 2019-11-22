@@ -1,32 +1,21 @@
+<?php require '../includes/config.php' ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-	<?php require '../includes/config.php' ?>
 	<meta charset="UTF-8">
-	<title><?php echo $params['title'] ?> - Категория</title>	
+	<title>Категория - <?php echo $params['title'] ?></title>	
 	<?php include '../includes/common-header.php' ?>
-	<link rel="stylesheet" type="text/css" href="../css/home.css?version=1.0">
 	<link rel="stylesheet" type="text/css" href="../css/post-info.css?version=1.0">	
 	<link rel="stylesheet" type="text/css" href="../css/post.css?version=1.0">
 	<link rel="stylesheet" type="text/css" href="../css/category.css">
 </head>
 <body>
-	<?php include '../includes/topnav.php' ?>
-		<div class="header-subtitle">
-			<span>
-				<?php 
-					$dog = $_GET['cat'];
-					if ($dog != false) {
-						$result = mysqli_query($connection, "SELECT * FROM `categories` WHERE `id` = $dog");
-						if (mysqli_num_rows($result) > 0) {
-							echo mysqli_fetch_assoc($result)['title'];
-						}
-				?>
-			</span>
-		</div>
-		<div class="container">
-
-			<?php 			
+	<?php include '../includes/header.php' ?>
+	<section>
+		<div class="category-container">
+			<?php
+				$dog = $_GET['cat'];
+				if ($dog != false) { 			
 				$counter = 0;
 				$result = mysqli_query($connection, "SELECT * FROM `articles` ORDER BY `pubdate`");
 				if (mysqli_num_rows($result) > 0) {
@@ -42,22 +31,20 @@
 								}
 							}
 							?>
-							<div class="content-col">
+							<div class="block-article">
 								<?php
 									if ($src != -1) { ?>
-										<div class="image-wrapper">
-											<a href="article.php?id=<?php echo $post['id'] ?>">
-												<img class="article-icon" src="<?php echo $src ?>" alt="article-icon">
-											</a>	
-										</div>
+										<a href="article.php?id=<?php echo $post['id'] ?>">
+											<div class="image-handler" style="background-image: url(<?php echo $src ?>);">												
+											</div>
+										</a>
 									<?php } ?>
+									<span class="blog-title">
+									<a href="article.php?id=<?php echo $post['id'] ?>"><?php echo $post['title'] ?></a></span>
 								
 								<?php 
-									include '../includes/post.php';	
 									$counter++;	
 								?>
-
-								<a class="button-link" href="article.php?id=<?php echo $post['id'] ?>">Читать дальше</a>
 							</div>
 							<?php
 						}								
@@ -75,6 +62,7 @@
 			}	
 		?>
 	</div>
+	</section>
 </body>
 </html>
 <?php mysqli_close($connection) ?>

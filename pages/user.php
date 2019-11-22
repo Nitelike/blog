@@ -3,17 +3,30 @@
 	if (isset($_SESSION['user'])) {
 		?>
 		<!DOCTYPE html>
-		<html lang="en">
+		<html lang="ru">
 		<head>
 			<meta charset="UTF-8">
-			<title><?php echo $params['title'] ?> - Пользователь</title>	
+			<title>Смена данных - <?php echo $params['title'] ?></title>	
 			<?php include '../includes/common-header.php' ?>
 			<link rel="stylesheet" type="text/css" href="../css/login.css?version=1.0">
 		</head>
 		<body>
-			<?php include '../includes/topnav.php' ?>
+			<?php include '../includes/header.php' ?>
 
-			<div class="container wrapper">
+			<aside><?php 
+				function currentUrl($url)
+				{
+					if (strpos($_SERVER['REQUEST_URI'], $url) !== false) {
+						echo 'current-page';
+					}
+				}
+			include '../includes/user-page-aside.php';
+				
+			?></aside>
+
+			<div class="additional"><?php include '../includes/user-page-aside.php'; ?></div>
+
+			<section class="side-section">
 				<?php 
 					if (isset($_POST['to_change'])) {
 						$errors = array();
@@ -24,17 +37,12 @@
 							$query = mysqli_query($connection, "SELECT `name` FROM `users` WHERE `name` = '$name'");
 							if (mysqli_num_rows($query) == '') {
 								$query = mysqli_query($connection, "UPDATE `users` SET `name` = '$name' WHERE `users`.`id` = $user_id;");
-								header("Refresh:0");
+								echo "<script>window.location.href='user.php';</script>";
 								
 							}
 							else {
 								$errors[] = 'Пользователь с логином "'. $name . '" уже существует';
 							}
-						}
-						if (trim($data['image']) != '') {
-							$image_url = trim($data['image']);
-							$query = mysqli_query($connection, "UPDATE `users` SET `image_url` = '$image_url' WHERE `users`.`id` = $user_id;");
-							header("Refresh:0");
 						}
 						if (trim($data['password']) != '' or trim($data['new_password']) != '' or trim($data['confirm_new_password']) != '') {
 							$password = trim($data['password']);
@@ -58,37 +66,41 @@
 				?>
 
 				<form action="user.php" method="post">
-					<div class="input-holder">
-						<input name="name" type="text" placeholder="Новый логин" value="<?php echo @$data['name'] ?>" maxlength="30">
-					</div>
+					<table>
+						<tr>
+							<td><label for="name">Новый логин</label></td>
+							<td><input name="name" type="text" value="<?php echo @$data['name'] ?>" maxlength="30"></td>
+						</tr>
 
-					<div class="input-holder">
-						<input name="password" type="password" placeholder="Пароль от аккаунта" value="<?php echo @$data['password'] ?>" maxlength="30">
-					</div>
+						<tr>
+							<td><label for="password">Пароль</label></td>
+							<td><input name="password" type="password" value="<?php echo @$data['password'] ?>" maxlength="30"></td>
+						</tr>
 
-					<div class="input-holder">
-						<input name="new_password" type="password" placeholder="Новый пароль" value="<?php echo @$data['new_password'] ?>" maxlength="30">
-					</div>
+						<tr>
+							<td><label for="new_password">Новый пароль</label></td>
+							<td><input name="new_password" type="password" value="<?php echo @$data['new_password'] ?>" maxlength="30"></td>
+						</tr>
 
-					<div class="input-holder">
-						<input name="confirm_new_password" type="password" placeholder="Подтверждение пароля" value="<?php echo @$data['confirm_new_password'] ?>" maxlength="30">
-					</div>
+						<tr>
+							<td><label for="confirm_new_password">Повторить новый пароль</label></td>
+							<td><input name="confirm_new_password" type="password" value="<?php echo @$data['confirm_new_password'] ?>" maxlength="30"></td>
+						</tr>
 
-					<div class="input-holder">
-						<input name="image" type="text" placeholder="Путь к иконке" value="<?php echo @$data['image'] ?>" autocomplete="off">
-					</div>
-
-					<div class="input-holder">
-						<button class="send-button" name="to_change" type="submit">Изменить</button>
-					</div>	
+						<tr>
+							<td><button class="send-button" name="to_change" type="submit">Изменить</button></td>
+						</tr>	
+					</table>
 				</form>
 
 				<form action="../includes/logout.php" method="post">
-					<div class="input-holder">
-						<button class="send-button" type="submit">Выйти</button>
-					</div>	
+					<table>
+						<tr>
+							<td><button class="send-button" type="submit">Выйти</button></td>
+						</tr>
+					</table>	
 				</form>
-			</div>	
+			</section>	
 		</body>
 		</html>
 	<?php

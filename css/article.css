@@ -1,23 +1,19 @@
 article {
+	background-color: #fff;
 	margin: 0 auto;
 	word-wrap: break-word;
-	margin-bottom: 20px;
-	padding: 20px;
-	border-radius: 10px;
+	border-radius: 5px;
 }
 article img {
 	margin: 0 auto;
 	display: block;
 	max-width: 100%;
 }
-article a {
-	color: grey;
-}
-article a:hover {
-	color: #171717;
-}
 article .post-title {
 	text-align: center;
+}
+article hr {
+	border-color: rgba(79, 122, 171, 0.8);
 }
 .post-content {
 	margin: 20px 0;

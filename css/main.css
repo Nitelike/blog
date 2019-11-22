@@ -7,13 +7,28 @@
 }
 body {
 	min-height: 100vh;
-	padding-top: 10px;
+	background-color: #f2f3f8;
 }
 a {
 	text-decoration: none;
 }
 a:hover {
-	color: grey;
+	color: rgba(79, 122, 171, 1);
+}
+.current-page, .current_link {
+	color: rgba(79, 122, 171, 1);
+}
+section {
+	overflow: auto;
+	max-width: 100%;
+	padding: 20px;
+	margin: 0 5%;
+	background-color: #fff;
+	border-radius: 5px;
+}
+.side-section {
+	width: 65%; 
+	float: right;
 }
 .wrapper {
 	display: flex;
@@ -27,7 +42,7 @@ a:hover {
 }
 input, textarea {
 	border-radius: 5px;
-	border: 1px solid grey;
+	border: 1px solid rgba(79, 122, 171, 0.9);
 	padding: 5px;
 	font-size: 0.9em;
 	max-width: 100%;
@@ -89,15 +104,16 @@ button {
 	background-color: #eee;
 }
 .send-button {
+	color: #2a5885;
 	margin-top: 10px;
 	border-radius: 5px;
-	padding: 5px;
-	border: 2px solid grey;
+	padding: 2px 5px 2px 5px;
+	border: 2px solid rgba(79, 122, 171, 1);
 	background-color: transparent;
 }
 .send-button:hover {
-	background-color: #e8e8e8;
-	border: 2px solid #5c5c5c;
+	background-color: rgba(79, 122, 171, 0.2);
+	border: 2px solid rgba(79, 122, 171, 1);
 }
 .inform-link {
 	color: #6699ff;
@@ -108,10 +124,34 @@ button {
 .disabled {
 	display: none;
 }
-@media screen and (max-width: 1100px) {
+.additional {
+	padding: 20px;
+	display: none;
+	background-color: #fff;
+	border-radius: 5px;
+}
+.point-image {
+	width: 200px;
+	height: 150px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;	
+}
+@media (max-width: 768px) {
 	aside {
 		display: none;
 	}
+	.additional {
+		display: block;
+		width: 90%;
+		margin: 40px 5% 40px 5%;
+	}
+	.side-section {
+		float: none;
+		width: 90%; 
+	}
+}
+@media screen and (max-width: 1100px) {
 	.content {
 		width: 90%;
 		margin-right: 5%;

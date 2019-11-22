@@ -1,16 +1,16 @@
+<?php require '../includes/config.php' ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-	<?php require '../includes/config.php' ?>
 	<meta charset="UTF-8">
 	<title><?php echo $params['title'] ?> - Вход в аккаунт</title>	
 	<?php include '../includes/common-header.php' ?>
 	<link rel="stylesheet" type="text/css" href="../css/login.css?version=1.0">
 </head>
 <body>
-	<?php include '../includes/topnav.php' ?>
+	<?php include '../includes/header.php' ?>
 
-	<div class="container wrapper">
+	<section>
 		<?php 
 			if (isset($_POST['to_login'])) {
 				$errors = array();
@@ -32,7 +32,7 @@
 						if ($user['name'] == $name and password_verify(trim($data['password']), $user['password'])) {
 							if ($user['verified'] == 1) {
 								$_SESSION['user'] = $user['id'];
-								header('Location: home.php');
+								echo "<script>window.location.href='home.php';</script>";
 							}
 							else {
 								$errors[] = 'У этого аккаунта неподтвержденный адрес электронной почты. Подтвердите его, перейдя по ссылке в пиcьме.';
@@ -54,23 +54,28 @@
 		?>
 
 		<form action="login.php" method="post">
-			<div class="input-holder">
-				<input name="login" type="text" placeholder="Логин" value="<?php echo @$data['login'] ?>" maxlength="20">
-			</div>
-
-			<div class="input-holder">
-				<input name="password" type="password" placeholder="Пароль" value="<?php echo @$data['password'] ?>" maxlength="30">
-			</div>
-
-			<div class="input-holder">
-				<button class="send-button" name="to_login" type="submit">Войти</button>
-			</div>	
+			<table>
+				<tr>
+					<td><label for="login">Логин</label></td>
+					<td><input name="login" type="text" value="<?php echo @$data['login'] ?>" maxlength="20"></td>
+				</tr>
+				<tr>
+					<td><label for="password">Пароль</label></td>
+					<td><input name="password" type="password" value="<?php echo @$data['password'] ?>" maxlength="30"></td>
+				</tr>
+				<tr>
+					<td><button class="send-button" name="to_login" type="submit">Войти</button></td>
+				</tr>
+			</table>
 		</form>
+
+		<br>
 		
 		<span>Если у вас нет аккаунта, вы можете <a class="inform-link" href="register.php">cоздать аккаунт</a>	</span>
 		<br>
+		<br>
 		<span>Если у вас нет доступа к аккаунту, вы можете <a class="inform-link" href="recover.php">восстановить</a> его, зная адрес электронной почты, которая была привязана к аккаунту.</span>	
-	</div>	
+	</section>	
 </body>
 </html>
 <?php mysqli_close($connection) ?>
