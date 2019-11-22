@@ -42,12 +42,12 @@
 				if (mysqli_num_rows($result) > 0) {
 					while ($post = mysqli_fetch_assoc($result)) {
 						$src = -1;
-						$index = strpos($post['text'], '<img src="');
+						$index = strpos($post['text'], '<img src=');
 						if ($index !== false) {
 							$index += 10;
-							$last_index = strpos(substr($post['text'], $index), '"');
+							$last_index = strpos(substr($post['text'], $index), '>');
 							if ($last_index !== false) {
-								$src = substr($post['text'], $index, $last_index);
+								$src = substr($post['text'], $index, $last_index - 8);
 							}
 						}
 						?>

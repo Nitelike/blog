@@ -41,12 +41,12 @@
 					while ($post = mysqli_fetch_assoc($result)) {
 						if (strpos($user['tracked_articles'], ' ' . $post['id'] . ',') !== false) {
 							$src = -1;
-							$index = strpos($post['text'], '<img src="');
+							$index = strpos($post['text'], '<img src=');
 							if ($index !== false) {
 								$index += 10;
-								$last_index = strpos(substr($post['text'], $index), '"');
+								$last_index = strpos(substr($post['text'], $index), '>');
 								if ($last_index !== false) {
-									$src = substr($post['text'], $index, $last_index);
+									$src = substr($post['text'], $index, $last_index - 8);
 								}
 							}
 							?>

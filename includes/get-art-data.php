@@ -11,12 +11,12 @@ $geoObjects = array();
 while ($art = mysqli_fetch_assoc($result)) {
 	if ($art['lat'] !== null and $art['lng'] !== null) {
 		$src = '';
-		$index = strpos($art['text'], '<img src="');
+		$index = strpos($art['text'], '<img src=');
 		if ($index !== false) {
 			$index += 10;
-			$last_index = strpos(substr($art['text'], $index), '"');
+			$last_index = strpos(substr($art['text'], $index), '>');
 			if ($last_index !== false) {
-				$src = substr($art['text'], $index, $last_index);
+				$src = substr($art['text'], $index, $last_index - 8);
 			}
 		}
 		array_push($geoObjects, array("id" => $art['id'], "title" => $art['title'], "lat" => $art['lat'], "lng" => $art['lng'], "image" => $src));
