@@ -188,7 +188,7 @@
 							
 							<div class="categories-variants">
 								<?php 
-									$districts = mysqli_query($connection, "SELECT * from `districts`");
+									$districts = mysqli_query($connection, "SELECT * from `districts` ORDER BY `title`");
 									if (mysqli_num_rows($districts) > 0) {
 										while ($district = mysqli_fetch_assoc($districts)) {
 											?>
@@ -258,6 +258,11 @@
 							$dir_files = scandir($search_dir, SCANDIR_SORT_DESCENDING);
 
 						}
+						$class = '';
+						if (strpos($_SERVER['REQUEST_URI'], "content-manager.php?mode=$_GET[mode]&id=$id") !== false) {
+							$class = 'current_link';
+						}
+						echo "<a class='$class' title='год-месяц-число_час-минута-секунда' href='content-manager.php?mode=$_GET[mode]&id=$id'>Последняя</a>";
 						
 						if (isset($dir_files)) {
 							$files_count = count($dir_files);

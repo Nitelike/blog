@@ -6,6 +6,7 @@ article {
 }
 article img {
 	margin: 0 auto;
+	margin-top: 20px;
 	display: block;
 	max-width: 100%;
 }
@@ -35,5 +36,11 @@ article hr {
 }
 .read-more-item:not(:last-child) {
 	margin-bottom: 10px;
+}
+.path a, .path small {
+	color: grey;
+}
+.path a:hover {
+	text-decoration: underline;
 }
 

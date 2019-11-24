@@ -10,9 +10,10 @@
 <?php } ?>
 
 <a href="content-manager.php?mode=add_district" class="<?php currentUrl('add_district') ?>">Добавить область</a>
-
+<?php
+	if ($user['status'] == 'admin') { ?>
 <a href="content-manager.php?mode=find_for_delete" class="<?php currentUrl('find_for_delete') ?>">Удалить</a>
-
+<?php } ?>
 <a href="content-manager.php?mode=update" class="<?php currentUrl('update') ?>">Изменить</a>
 
 <?php

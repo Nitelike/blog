@@ -44,7 +44,7 @@
 				$counter += selectFromTable('articles', $title, 'update');
 
 				if ($counter < 1) {
-					echo '<div class="centered-page-subtitle wrapper"><span>По вашему запросу ничего не найдено</span></div>';
+					echo 'По вашему запросу ничего не найдено';
 				}
 				?>
 			</form>

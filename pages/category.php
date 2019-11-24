@@ -17,7 +17,7 @@
 				$dog = $_GET['cat'];
 				if ($dog != false) { 			
 				$counter = 0;
-				$result = mysqli_query($connection, "SELECT * FROM `articles` ORDER BY `pubdate`");
+				$result = mysqli_query($connection, "SELECT * FROM `articles` ORDER BY `title`");
 				if (mysqli_num_rows($result) > 0) {
 					while ($post = mysqli_fetch_assoc($result)) {
 						if (strpos($post['category_id'], $dog) !== false) {
@@ -32,6 +32,7 @@
 							}
 							?>
 							<div class="block-article">
+								<div id="track-<?php echo $post['id'] ?>"></div>
 								<?php
 									if ($src != -1) { ?>
 										<a href="article.php?id=<?php echo $post['id'] ?>">
@@ -51,18 +52,13 @@
 					}
 				}
 				if ($counter < 1) {
-					?>
-						<div class="wrapper centered-page-subtitle">
-							<span>
-								В этой категории нет статей
-							</span>
-						</div>
-					<?php
+					echo 'В этой категории нет статей';
 				}
 			}	
 		?>
 	</div>
 	</section>
+	<?php include '../includes/footer.php' ?>
 </body>
 </html>
 <?php mysqli_close($connection) ?>

@@ -6,7 +6,7 @@
 
 <header>
 	<div class="tool-section">
-		<button title="Дополнительные функции" class="menu-button" type="button" onclick="showToolbar()"><i class="fa fa-bars"></i><span class="menu-title">Дополнительно</span></button>
+		<button title="Дополнительные функции" class="menu-button" type="button" onclick="showToolbar()"><i class="fa fa-bars"></i><span class="menu-title">Меню</span></button>
 		<div id="tool-content">
 			<div id="left">
 				<a href="home.php">Главная</a>

@@ -37,7 +37,7 @@
 				$id = ' ' . $_GET['district_id'] . ',';
 				if ($id != false) { 			
 
-				$result = mysqli_query($connection, "SELECT * FROM `articles` WHERE `district_id` = '$id' ORDER BY `title` ASC");
+				$result = mysqli_query($connection, "SELECT * FROM `articles` WHERE `district_id` = '$id' ORDER BY `title`");
 
 				if (mysqli_num_rows($result) > 0) {
 					while ($post = mysqli_fetch_assoc($result)) {
@@ -73,6 +73,7 @@
 		?>
 		</div>
 	</section>
+	<?php include '../includes/footer.php' ?>
 </body>
 </html>
 <?php mysqli_close($connection) ?>

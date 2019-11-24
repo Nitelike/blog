@@ -23,12 +23,13 @@ section {
 	max-width: 100%;
 	padding: 20px;
 	margin: 0 5%;
+	margin-bottom: 20px;
 	background-color: #fff;
 	border-radius: 5px;
 }
 .side-section {
 	width: 65%; 
-	float: right;
+	float: left;
 }
 .wrapper {
 	display: flex;

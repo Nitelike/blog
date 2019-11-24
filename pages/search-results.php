@@ -29,7 +29,7 @@
 		<?php 
 			
 			if(strlen($key) > 0) {
-				$result = mysqli_query($connection, "SELECT * FROM `articles` ORDER BY `pubdate`");
+				$result = mysqli_query($connection, "SELECT * FROM `articles` ORDER BY `title`");
 				$counter = 0;
 				if (mysqli_num_rows($result) > 0) {
 					while ($post = mysqli_fetch_assoc($result)) {
@@ -72,6 +72,7 @@
 		?>	
 		</div>
 	</section>
+	<?php include '../includes/footer.php' ?>
 </body>
 </html>
 <?php mysqli_close($connection) ?>

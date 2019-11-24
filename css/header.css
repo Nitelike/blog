@@ -26,6 +26,8 @@ header {
 	margin-right: 15px;
 }
 .logo {
+	letter-spacing: 3px;
+	font-weight: bold;
 	word-wrap: break-word;
 	padding-top: 0.7em;
 	text-align: center;
@@ -152,7 +154,8 @@ li:hover {
 	}
 	.logo {
 		padding-top: 0;
-		font-size: 1.8em;
+		height: auto;
+		padding: 10px 0;
 	}
 	.menu-button {
 		display: block;

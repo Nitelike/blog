@@ -58,6 +58,8 @@
 
 	  }
 	</script>
+
+	<?php include '../includes/footer.php' ?>
 </body>
 </html>
 <?php mysqli_close($connection) ?>

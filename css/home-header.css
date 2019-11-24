@@ -1,7 +1,7 @@
 header {
 	width: 100%;
 	margin-bottom: 40px;
-	background-image: url(../images/nature.jpg);
+	background-image: url(../images/craft.jpg);
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;	
@@ -15,11 +15,11 @@ header {
 	font-size: 1em;
 	height: 44px;
 	line-height: 44px;
-	background-color: rgba(225, 233, 245, 0.5);
+	background-color: rgba(225, 233, 245, 0.7);
 }
 .categories-section {
 	text-align: center;
-	background-color: rgba(79, 122, 171, 0.5);
+	background-color: rgba(79, 122, 171, 0.7);
 }
 .tool-section a, #tool-content a {
 	cursor: pointer;
@@ -43,6 +43,8 @@ header {
 	height: 40vh;
 }
 .logo a {
+	animation: slide-up 0.4s ease;
+	text-shadow: 4px 4px 10px #000000;
 	letter-spacing: 3px;
 	margin: 0;
 	font-weight: bold;
@@ -142,11 +144,22 @@ li:hover {
 	margin-left: 40px;
 	font-size: 0.7em;
 }
+@keyframes slide-up {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 @media (max-width: 768px) {
 	.menu-title {
 		display: inline-block;
 	}
 	#tool-content, #categories-section {
+		z-index: 9;
 		margin-top: 25px;
 		display: none;
 		position: absolute;

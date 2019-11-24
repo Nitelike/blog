@@ -1,0 +1,11 @@
+footer {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	-ms-align-items: center;
+	align-items: center;
+	justify-content: center;
+	margin: 20px 0;
+	padding: 10px;
+}
