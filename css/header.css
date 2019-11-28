@@ -140,6 +140,7 @@ li:hover {
 		display: inline-block;
 	}
 	#tool-content, #categories-section {
+		z-index: 9;
 		margin-top: 25px;
 		display: none;
 		position: absolute;
@@ -176,6 +177,8 @@ li:hover {
 		display: block;
 	}
 	#categories-section > li {
+		height: auto;
+		line-height: auto;
 		display: block;
 	}
 	.search-input {

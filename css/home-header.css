@@ -191,6 +191,8 @@ li:hover {
 		display: block;
 	}
 	#categories-section > li {
+		height: auto;
+		line-height: auto;
 		display: block;
 	}
 	.search-input {
