@@ -65,12 +65,12 @@ $categories = $categories_model->get_categories();
 		{
 			foreach ($view as $partial_view)
 			{
-				require_once '../app/views/' . $partial_view . 'View.php';
+				require_once '../app/views/' . lcfirst($partial_view) . 'View.php';
 			}
 		}
 		else
 		{
-			require_once '../app/views/' . $view . 'View.php';
+			require_once '../app/views/' . lcfirst($view) . 'View.php';
 		}
 		?>
 	</div>
