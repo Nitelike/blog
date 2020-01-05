@@ -15,7 +15,7 @@ class Model
 
 	public function model($model)
 	{
-		require_once('../app/models/' . $model . 'Model.php');
+		require_once('../app/models/' . lcfirst($model) . 'Model.php');
 		return new $model;
 	}
 }
