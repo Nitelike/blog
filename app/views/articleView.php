@@ -2,7 +2,9 @@
 	<?php if(isset($_SESSION['user']) and $_SESSION['user']['status'] !== 'member') { ?>
 	<div class="article-editor-buttons-row">
 		<a class="btn" href="<?=$data['path']?>/public/article/update/<?=$data['article']['id']?>">Изменить</a>
+		<?php if($_SESSION['user']['status'] === 'admin') { ?>
 		<a class="btn btn-alert" href="<?=$data['path']?>/public/article/delete/<?=$data['article']['id']?>">Удалить</a>
+		<?php } ?>
 	</div>
 	<?php } ?>
 
