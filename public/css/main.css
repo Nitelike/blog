@@ -49,6 +49,9 @@ hr {
 	font-size: 18px;
 	margin: 10px 0;
 }
+.current-link {
+	color: #c00;
+}
 .btn {
 	text-decoration: none;
 	cursor: pointer;

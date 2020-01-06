@@ -42,6 +42,17 @@
 		<input type="text" name="lng" placeholder="Долгота" value="<?=$data['article']['lng']?>" autocomplete="off">
 		<br> <br>
 
+		<?php if(strpos($data['action'], 'update') !== false) { ?>
+		<label for="">Версии статьи</label>
+		<div class="article-versions">
+			<a class="<?php if(strpos($_SERVER['REQUEST_URI'], $data['article']['id'] . '/') === false) {echo 'current-link';} ?> common-link line-link" href="<?=$data['path']?>/public/article/update/<?=$data['article']['id']?>">Последняя</a>
+			<?php foreach($data['versions'] as $version) { ?>
+			<a title="год-месяц-число_час-минута-секунда" class="<?php if(strpos($_SERVER['REQUEST_URI'], $version) !== false) {echo 'current-link';} ?> common-link line-link" href="<?=$data['path']?>/public/article/update/<?=$data['article']['id']?>/<?=$version?>"><?=$version?></a>
+			<?php } ?>
+		</div>
+		<?php } ?>
+		<br>
+
 		<button class="btn" type="submit">Отправить</button>
 	</form>
 </section>

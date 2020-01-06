@@ -38,6 +38,8 @@ class Article_Controller extends Controller
 			$response = $article_model->create($_POST['title'], $_POST['text'], $_POST['category'], $_POST['lat'], $_POST['lng']);
 			if($response)
 			{
+				$vcs_model = $this->model('Vcs');
+				$vcs_response = $vcs_model->add('articles');
 				$result['success'][0] = 'Статья создана!';
 			}
 			else
@@ -63,13 +65,16 @@ class Article_Controller extends Controller
 		}
 	}
 
-	public function update($id)
+	public function update($id, $version = false)
 	{
 		$article = array('title' => '', 'text' => '', 'category' => '', 'lat' => '', 'lng' => '');
+		$result = array('errors' => array(''), 'success' => array(''));
 		$categories_model = $this->model('Categories');
 		$categories = $categories_model->get_categories();
-		$result = array('errors' => array(''), 'success' => array(''));
 
+		$vcs_model = $this->model('Vcs');
+		$versions = $vcs_model->get_versions('articles', $id);
+		
 		if(isset($_SESSION['user']) and $_SESSION['user']['status'] !== 'member')
 		{
 			$article_model = $this->model('Article');
@@ -80,6 +85,8 @@ class Article_Controller extends Controller
 
 				if($response)
 				{
+					$vcs_model = $this->model('Vcs');
+					$vcs_response = $vcs_model->add('articles');
 					$result['success'][0] = 'Статья изменена!';
 				}
 				else
@@ -88,18 +95,16 @@ class Article_Controller extends Controller
 				}
 			}
 
-			$article_unprocessed = $article_model->read($id);
+			$article = $article_model->read($id);
+			$article['category'] = ' ' . $article['category_id'] . ',';
 
-			if($article_unprocessed)
+			if($version)
 			{
-				$article['title'] = $article_unprocessed['title'];
-				$article['text'] = $article_unprocessed['text'];
-				$article['category'] = ' ' . $article_unprocessed['category_id'] . ',';
-				$article['lat'] = $article_unprocessed['lat'];
-				$article['lng'] = $article_unprocessed['lng'];
+				$article = $vcs_model->read('articles', $id, $version);
+				$article['category'] = ' ' . $article['category_id'] . ',';
 			}	
 		}
 
-		$this->view(array('user/userMenu', 'articleEditor'), 'generalTemplate', array('page' => 'Изменить статью', 'article' => $article, 'categories' => $categories, 'action' => 'update/' . $id, 'response' => $result));
+		$this->view(array('user/userMenu', 'articleEditor'), 'generalTemplate', array('page' => 'Изменить статью', 'article' => $article, 'categories' => $categories, 'action' => 'update/' . $id, 'response' => $result, 'versions' => $versions));
 	}
 }
