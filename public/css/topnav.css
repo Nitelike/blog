@@ -41,27 +41,33 @@
 	padding: 20px;
 }
 .logo a {
-	font-size: 26px;
+	font-size: 32px;
+	letter-spacing: 2px;
 	font-weight: bold;
 	text-decoration: none;
 }
 
 .categories-menu {
-	background-color: rgba(79, 122, 171, 0.8);
+	background-color: transparent;
+	border-top: 2px solid rgba(79, 122, 171, 1);
+	border-bottom: 2px solid rgba(79, 122, 171, 1);
+	
 }
 .categories-menu ul {
 	list-style: none;
-	text-align: center;
 }
 .categories-menu li {
 	display: inline-block;
-	padding: 5px 10px;
+	padding: 10px 20px;
 }
 .categories-menu li:hover {
-	background-color: rgba(79, 122, 171, 1);
+	background-color: rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	padding: 3px 10px;
+	margin: 7px 10px;
 }
 .categories-menu a {
 	font-size: 22px;
 	text-decoration: none;
-	color: #fff;
+	color: #000;
 }
