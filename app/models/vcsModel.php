@@ -13,6 +13,8 @@ class Vcs extends Model
 	}
 
 	public function add($dir) {
+		$this->init();
+
 		$sql = "SELECT * FROM `$dir` ORDER BY `id` DESC LIMIT 1";
 		$query = mysqli_query($this->connection, $sql);
 		$query = mysqli_fetch_assoc($query);
