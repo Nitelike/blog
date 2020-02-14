@@ -14,12 +14,15 @@ class User extends Model
 		$mail->Port = 587;
 		$mail->SMTPSecure = 'tls';
 		$mail->SMTPAuth = true;
-		$mail->Username = 'belarushistoryexam@gmail.com';
-		$mail->Password = "AMgbED28";
-		$mail->setFrom('belarushistoryexam@gmail.com', $author);
+		$mail->Username = '###';
+		$mail->Password = "###";
+		$mail->setFrom('###', $author);
 		$mail->addAddress($email, $login);
 		$mail->Subject = $subject;
 		$mail->Body = $message;
+		//$mail->SMTPDebug = 2;
+		//$mail->Debugoutput = 'logHandler';
+
 
 		if ($mail->send())
 		{
@@ -27,6 +30,7 @@ class User extends Model
 		}
 		else
 		{
+			//print_r($mail->ErrorInfo);
 			return 0;
 		}
 	}

@@ -19,29 +19,36 @@ $categories = $categories_model->get_categories();
 	<link rel="stylesheet" type="text/css" href="<?=$data['path']?>/public/css/articles.css">
 	<link rel="stylesheet" type="text/css" href="<?=$data['path']?>/public/css/user.css">
 	<script defer src="<?=$data['path']?>/public/js/jquery-3.4.1.min.js"></script>
+	<script defer src="<?=$data['path']?>/public/js/topnav.js"></script>
 </head>
 <body>
 	<header>
 		<div class="tools-menu">
 			<div class="wrapper">
-				<div id="left-menu">
-					<a class="common-link" href="<?=$data['path']?>/public/">Главная</a>
-					<a class="common-link" href="#">О проекте</a>
-				</div>
+				<a href="javascript:void(0);" class="menu-icon" onclick="myFunction()">
+					<i class="fa fa-bars"></i>
+				</a>
 
-				<div id="right-menu">
-					<div class="search">
-						<form method="post" action="<?=$data['path']?>/public/articles/search" autocomplete="off">
-							<input type="text" placeholder="Поиск по статьям" name="key" maxlength="25" value="<?php if (isset($data['key'])) echo $data['key']; ?>">
-							<button type="submit"><i class="fa fa-search"></i></button>
-						</form>
+				<div id="tools-items" style="">
+					<div id="left-menu">
+						<a class="common-link" href="<?=$data['path']?>/public/">Главная</a>
+						<a class="common-link" href="#">О проекте</a>
 					</div>
 
-					<?php if(isset($_SESSION['user'])) { ?>
-					<a class="common-link" href="<?=$data['path']?>/public/user/change"><?=$_SESSION['user']['name']?></a>
-					<?php } else { ?>
-					<a class="common-link" href="<?=$data['path']?>/public/user/login">Вход</a>
-					<?php } ?>
+					<div id="right-menu">
+						<div class="search">
+							<form method="post" action="<?=$data['path']?>/public/articles/search" autocomplete="off">
+								<input type="text" placeholder="Поиск по статьям" name="key" maxlength="25" value="<?php if (isset($data['key'])) echo $data['key']; ?>">
+								<button type="submit"><i class="fa fa-search"></i></button>
+							</form>
+						</div>
+
+						<?php if(isset($_SESSION['user'])) { ?>
+						<a class="common-link" href="<?=$data['path']?>/public/user/change"><?=$_SESSION['user']['name']?></a>
+						<?php } else { ?>
+						<a class="common-link" href="<?=$data['path']?>/public/user/login">Вход</a>
+						<?php } ?>
+					</div>
 				</div>
 			</div>
 		</div>
