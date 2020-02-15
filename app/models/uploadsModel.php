@@ -36,9 +36,9 @@ class Uploads extends Model
 				    array_push($errors, "Файл с таким названием уже существует");
 					$uploadOk = 0;
 				}
-				if($_FILES["fileToUpload"]["size"] > 5000000) 
+				if($_FILES["fileToUpload"]["size"] > 15000000) 
 				{
-				    array_push($errors, "Размер файла слишком большой (больше 5Мбайт)");
+				    array_push($errors, "Размер файла слишком большой (больше 15Мбайт)");
 				    $uploadOk = 0;
 				}
 				if(!in_array($imageFileType, $file_formats)) 

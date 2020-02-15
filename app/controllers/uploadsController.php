@@ -14,7 +14,7 @@ class Uploads_Controller extends Controller
 		{
 			$response = array('errors' => array(''), 'success' => array(''));
 
-			if(isset($_POST["submit"]))
+			if(isset($_POST["submit"]) && isset($_FILES['fileToUpload']))
 			{
 				$uploads_model = $this->model('Uploads');
 				$response = $uploads_model->upload_image();
