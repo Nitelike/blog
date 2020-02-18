@@ -86,7 +86,7 @@ class Article_Controller extends Controller
 				if($response)
 				{
 					$vcs_model = $this->model('Vcs');
-					$vcs_response = $vcs_model->add('articles');
+					$vcs_response = $vcs_model->update('articles', $id);
 					$result['success'][0] = 'Статья изменена!';
 				}
 				else

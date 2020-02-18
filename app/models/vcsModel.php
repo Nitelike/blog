@@ -12,6 +12,31 @@ class Vcs extends Model
 		}
 	}
 
+    public function update($dir, $id) {
+		$this->init();
+
+        $sql = "SELECT * FROM `$dir` WHERE `id` = $id";
+		$query = mysqli_query($this->connection, $sql);
+		$query = mysqli_fetch_assoc($query);
+
+		if (!file_exists("../repo/$dir/$id"))
+		{
+			if (!mkdir("../repo/$dir/$id", 0777))
+			{
+				return false;
+			}
+		}
+
+		date_default_timezone_set('Europe/Minsk');
+		$file_path = "../repo/$dir/$id/" . date("Y-m-d_H-i-s") . ".txt";
+		if (!file_put_contents($file_path, "<?php return " . var_export($query, true) . ";"))
+		{
+			return false;
+		}
+
+		return true;
+	}
+
 	public function add($dir) {
 		$this->init();
 

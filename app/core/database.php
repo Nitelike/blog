@@ -6,9 +6,11 @@ class Database
 	protected $username;
 	protected $password;
 	protected $db_name;
+    protected $config;
 
 	public function __construct($host, $username, $password, $db_name)
 	{
+        $this->config = new Config;
 		$this->host = $host;
 		$this->username = $username;
 		$this->password = $password;
