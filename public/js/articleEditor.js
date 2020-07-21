@@ -12,7 +12,7 @@ $(document).ready(function () {
 
 function add(tag) {
 	var index = tag.indexOf('</');
-	if (index === -1) {
+	if (index == -1) {
 		index = tag.indexOf('"') + 1;
 	}
 	
@@ -26,8 +26,8 @@ function add(tag) {
 
 function setSelectionRange(input, selectionStart, selectionEnd) {
   if (input.setSelectionRange) {
-    input.focus();
     input.setSelectionRange(selectionStart, selectionEnd);
+    input.focus();
   }
   else if (input.createTextRange) {
     var range = input.createTextRange();

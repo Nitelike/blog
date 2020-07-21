@@ -1,5 +1,13 @@
+header {
+	background-image: url(/blog/uploads/craft.jpg);
+	background-repeat: no-repeat;
+	background-position: center;
+	-webkit-background-size: cover;
+	background-size: cover;
+}
+
 .tools-menu {
-	background-color: #e1e9f5;
+	background-color: rgba(225, 233, 245, 0.8);
 	padding: 10px 0;
 }
 .tools-menu #tools-items {
@@ -40,13 +48,16 @@
 
 .logo {
 	text-align: center;
-	background-color: #ebf1fa;
-	padding: 20px;
+	padding: 40px;
+	
 }
 .logo a {
-	font-size: 26px;
+	font-size: 32px;
 	font-weight: bold;
 	text-decoration: none;
+	color: #fff;
+	text-shadow: 4px 4px 10px #000000;
+	letter-spacing: 3px;
 }
 
 .categories-menu {
@@ -58,14 +69,15 @@
 }
 .categories-menu li {
 	display: inline-block;
-	padding: 5px 10px;
+	padding: 8px 10px;
 }
 .categories-menu li:hover {
-	background-color: rgba(79, 122, 171, 1);
+	background-color: rgba(57, 98, 144, 0.9);
 }
 .categories-menu a {
 	font-size: 22px;
 	text-decoration: none;
+	text-shadow: 2px 2px 5px #000000;
 	color: #fff;
 }
 
