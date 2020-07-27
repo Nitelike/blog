@@ -65,7 +65,7 @@ class Article extends Model
 		$lat = floatval(mysqli_real_escape_string($this->connection, trim($lat)));
 		$lng = floatval(mysqli_real_escape_string($this->connection, trim($lng)));
 
-		$sql = "UPDATE `articles` SET `title` = '$title', `text` = '$text', `category_id` = '$category', `lat` = '$lat', `lng` = 'lng' WHERE `id` = '$id'";
+		$sql = "UPDATE `articles` SET `title` = '$title', `text` = '$text', `category_id` = '$category', `lat` = '$lat', `lng` = '$lng' WHERE `id` = '$id'";
 
 		$query = mysqli_query($this->connection, $sql);
 

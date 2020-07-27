@@ -13,6 +13,7 @@
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
+    border-radius: 5px;
 }
 .image-container:before{
     content: "";

@@ -24,9 +24,13 @@ class Users_Controller extends Controller
 		{
 			if(isset($_POST['key']))
 			{
-				$users_model = $this->model('Users');
-				$users = $users_model->find($_POST['key']);
-				$this->view(array('user/userMenu', 'users'), 'generalTemplate', array('page' => 'Пользователи', 'users' => $users, 'key' => $_POST['key']));
+                $users = array();
+                if(trim($_POST['key'])) 
+                {
+                    $users_model = $this->model('Users');
+                    $users = $users_model->find($_POST['key']);
+                }
+				$this->view(array('user/userMenu', 'users'), 'generalTemplate', array('page' => 'Пользователи', 'users' => $users, 'ukey' => $_POST['key']));
 			}
 		}
 	}
