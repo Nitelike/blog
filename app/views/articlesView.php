@@ -1,4 +1,17 @@
-<section class="articles-previews">
+<?php if($data['search'] == 'false') { ?>
+
+<section class="right">
+	<span class="title">Подкатегории</span>
+	<hr>
+
+	<?php foreach ($data['subcategories'] as $subcategory) { ?>
+		<a class="line-link common-link" href="<?=$data['path']?>/public/articles/subcategory/<?=$subcategory['id']?>"><?=$subcategory['title']?></a>
+	<?php } ?>
+</section>
+
+<?php } ?>
+
+<section class="articles-previews <?php if($data['search'] == 'false') { echo 'left'; } ?>">
 
 	<?php foreach($data['articles'] as $article) { ?>
 

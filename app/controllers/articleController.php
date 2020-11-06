@@ -16,12 +16,20 @@ class Article_Controller extends Controller
 		$articles_model = $this->model('Articles');
 		$read_more = $articles_model->get_new_articles($id, $article['category_id'], 5);
 
-		$this->view('article', 'generalTemplate', array('article' => $article, 'read_more' => $read_more, 'page' => 'Статья'));
+		$this->view('article', 'generalTemplate', array('article' => $article, 'read_more' => $read_more, 'page' => $article['title']));
+	}
+
+	public function singleread($id = 0)
+	{
+		$article_model = $this->model('Article');
+		$article = $article_model->read($id);
+
+		$this->view('article', 'generalTemplate', array('article' => $article, 'mode' => 'single', 'page' => $article['title']));
 	}
 
 	public function create()
 	{
-		$article = array('title' => '', 'text' => '', 'category' => '', 'lat' => '', 'lng' => '');
+		$article = array('title' => '', 'text' => '', 'category' => '', 'lat' => '', 'lng' => '', 'subcategory_id' => '');
 		$categories_model = $this->model('Categories');
 		$categories = $categories_model->get_categories();
 		$result = array('errors' => array(''), 'success' => array(''));
@@ -31,11 +39,12 @@ class Article_Controller extends Controller
 			$article['title'] = $_POST['title'];
 			$article['text'] = $_POST['text'];
 			$article['category'] = ' ' . $_POST['category'] . ',';
+			$article['subcategory_id'] = $_POST['subcategory'];
 			$article['lat'] = $_POST['lat'];
 			$article['lng'] = $_POST['lng'];
 
 			$article_model = $this->model('Article');
-			$response = $article_model->create($_POST['title'], $_POST['text'], $_POST['category'], $_POST['lat'], $_POST['lng']);
+			$response = $article_model->create($_POST['title'], $_POST['text'], $_POST['category'], $_POST['lat'], $_POST['lng'], $_POST['subcategory']);
 			if($response)
 			{
 				$vcs_model = $this->model('Vcs');
@@ -67,10 +76,11 @@ class Article_Controller extends Controller
 
 	public function update($id, $version = false)
 	{
-		$article = array('title' => '', 'text' => '', 'category' => '', 'lat' => '', 'lng' => '');
+		$article = array('title' => '', 'text' => '', 'category' => '', 'lat' => '', 'lng' => '', 'subcategory_id' => '');
 		$result = array('errors' => array(''), 'success' => array(''));
 		$categories_model = $this->model('Categories');
 		$categories = $categories_model->get_categories();
+		$subcategories = array();
 
 		$vcs_model = $this->model('Vcs');
 		$versions = $vcs_model->get_versions('articles', $id);
@@ -81,7 +91,11 @@ class Article_Controller extends Controller
 
 			if(isset($_POST['title']))
 			{
-				$response = $article_model->update($id, $_POST['title'], $_POST['text'], $_POST['category'], $_POST['lat'], $_POST['lng']);
+				$subcategory = 0;
+				if(isset($_POST['subcategory'])) {
+					$subcategory = $_POST['subcategory'];
+				}
+				$response = $article_model->update($id, $_POST['title'], $_POST['text'], $_POST['category'], $_POST['lat'], $_POST['lng'], $subcategory);
 
 				if($response)
 				{
@@ -97,6 +111,7 @@ class Article_Controller extends Controller
 
 			$article = $article_model->read($id);
 			$article['category'] = ' ' . $article['category_id'] . ',';
+			$subcategories = $categories_model->get_subcategories($article['category_id']);
 
 			if($version)
 			{
@@ -105,6 +120,6 @@ class Article_Controller extends Controller
 			}	
 		}
 
-		$this->view(array('user/userMenu', 'articleEditor'), 'generalTemplate', array('page' => 'Изменить статью', 'article' => $article, 'categories' => $categories, 'action' => 'update/' . $id, 'response' => $result, 'versions' => $versions));
+		$this->view(array('user/userMenu', 'articleEditor'), 'generalTemplate', array('page' => 'Изменить статью', 'article' => $article, 'categories' => $categories, 'subcategories' => $subcategories, 'action' => 'update/' . $id, 'response' => $result, 'versions' => $versions));
 	}
 }

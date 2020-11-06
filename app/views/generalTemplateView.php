@@ -9,7 +9,7 @@ $categories = $categories_model->get_categories();
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title><?=$data['page']?></title>
-	<link rel="icon" type="image/png" href="../images/belarus.png">
+	<link rel="icon" type="image/png" href="<?=$data['path']?>/uploads/belarus.png">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="<?=$data['path']?>/public/css/main.css">
@@ -18,6 +18,7 @@ $categories = $categories_model->get_categories();
 	<link rel="stylesheet" type="text/css" href="<?=$data['path']?>/public/css/article.css">
 	<link rel="stylesheet" type="text/css" href="<?=$data['path']?>/public/css/articles.css">
 	<link rel="stylesheet" type="text/css" href="<?=$data['path']?>/public/css/user.css">
+	<link rel="stylesheet" type="text/css" href="<?=$data['path']?>/public/css/footer.css">
 	<script defer src="<?=$data['path']?>/public/js/jquery-3.4.1.min.js"></script>
 	<script defer src="<?=$data['path']?>/public/js/topnav.js"></script>
 </head>
@@ -32,7 +33,7 @@ $categories = $categories_model->get_categories();
 				<div id="tools-items" style="">
 					<div id="left-menu">
 						<a class="common-link" href="<?=$data['path']?>/public/">Главная</a>
-						<a class="common-link" href="#">О проекте</a>
+						<a class="common-link" href="<?=$data['path']?>/public/article/singleread/152">О проекте</a>
 					</div>
 
 					<div id="right-menu">
@@ -59,8 +60,9 @@ $categories = $categories_model->get_categories();
 			<div class="wrapper">
 				<ul>
 					<?php foreach($categories as $category) { ?>
+					<?php if($category['title'] != 'system') { ?>
 					<li><a href="<?=$data['path']?>/public/articles/category/<?=$category['id']?>"><?=$category['title']?></a></li>
-					<?php } ?>
+					<?php }} ?>
 				</ul>
 			</div>
 		</div>
@@ -80,6 +82,13 @@ $categories = $categories_model->get_categories();
 			require_once '../app/views/' . lcfirst($view) . 'View.php';
 		}
 		?>
+	</div>
+
+	<div class="wrapper">
+		<footer>
+			<span class="footer_date_place"><?php echo date("Y"); ?>, Витебск</span>
+			<span class="footer_email">ax.2904@gmail.com</span>
+		</footer>
 	</div>
 </body>
 </html>

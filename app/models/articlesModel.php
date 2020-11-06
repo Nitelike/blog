@@ -4,14 +4,25 @@ class Articles extends Model
 {
 	public function get_image_url($text)
 	{
-		$src = '';
-		$index = strpos($text, '<img src=');
+		$src = "";
+		$f = 0;
+		$index = strpos($text, "<img src=");
 		if ($index !== false) {
-			$index += 10;
-			$last_index = strpos(substr($text, $index), '>');
-			if ($last_index !== false) {
-				$src = substr($text, $index, $last_index - 8);
+			for($i = $index; $i < strlen($text); $i++) {
+				$src = $src . $text[$i];
+				if($text[$i] == ">") {
+					$f = 1;
+					$i = strlen($text);
+				}
 			}
+		}
+
+		if($f == 1) {
+			return substr($src, 10, strlen($src) - 19);
+		}
+
+		if($f == 0) {
+			$src = "";
 		}
 
 		return $src;
@@ -40,6 +51,25 @@ class Articles extends Model
 
 		$result = array();
 		$sql = "SELECT * FROM `articles` WHERE `category_id` = '$category_id' ORDER BY `title`";
+		$articles = mysqli_query($this->connection, $sql);
+
+		if($articles)
+		{
+			while($article = mysqli_fetch_assoc($articles))
+			{
+				$src = $this->get_image_url($article['text']);
+
+				array_push($result, array('title' => $article['title'], 'src' => $src, 'id' => $article['id']));
+			}
+		}
+
+		return $result;
+	}
+
+	public function get_by_subcategory($subcategory_id)
+	{
+		$result = array();
+		$sql = "SELECT * FROM `articles` WHERE `subcategory_id` = '$subcategory_id' ORDER BY `title`";
 		$articles = mysqli_query($this->connection, $sql);
 
 		if($articles)

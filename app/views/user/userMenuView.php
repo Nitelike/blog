@@ -4,6 +4,7 @@
 	<a class="common-link line-link" href="<?=$data['path']?>/public/user/selected">Избранные</a>
 	<?php if($_SESSION['user']['status'] === 'editor' or $_SESSION['user']['status'] === 'admin') { ?>
 	<a class="common-link line-link" href="<?=$data['path']?>/public/article/create">Написать статью</a>
+	<a class="common-link line-link" href="<?=$data['path']?>/public/categories/subread">Подкатегории</a>
 	<a class="common-link line-link" href="<?=$data['path']?>/public/uploads/upload">Загрузить</a>
 	<?php } ?>
 	<?php if($_SESSION['user']['status'] === 'admin') { ?>

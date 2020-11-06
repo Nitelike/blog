@@ -1,4 +1,4 @@
-<section class="article left">
+<section class="article <?php if(!isset($data['mode']) || $data['mode'] != 'single') { echo 'left'; } ?>">
 	<?php if(isset($_SESSION['user']) and $_SESSION['user']['status'] !== 'member') { ?>
 	<div class="article-editor-buttons-row">
 		<a class="btn" href="<?=$data['path']?>/public/article/update/<?=$data['article']['id']?>">Изменить</a>
@@ -34,6 +34,8 @@
 	</div>
 </section>
 
+<?php if(!isset($data['mode']) || $data['mode'] != 'single') { ?>
+
 <section class="right">
 	<span class="title">Статьи по теме</span>
 	<hr>
@@ -42,6 +44,8 @@
 		<a class="line-link common-link" href="<?=$new_article['id']?>"><?=$new_article['title']?></a>
 	<?php } ?>
 </section>
+
+<?php } ?>
 
 <?php if ($data['article']['lat'] and $data['article']['lng']) { ?>
 <section class="map left">
@@ -59,6 +63,24 @@
 			    center: [53.89911389, 28.13402537],
 			    zoom: 6
 			});
+
+		    var isMobile = {
+	            Android: function() {return navigator.userAgent.match(/Android/i);},
+	            BlackBerry: function() {return navigator.userAgent.match(/BlackBerry/i);},
+	            iOS: function() {return navigator.userAgent.match(/iPhone|iPad|iPod/i);},
+	            Opera: function() {return navigator.userAgent.match(/Opera Mini/i);},
+	            Windows: function() {return navigator.userAgent.match(/IEMobile/i);},
+	            any: function() {
+	                return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+	            }
+	        };
+
+	        // после вызова карты
+	        if(isMobile.any()){
+	                myMap.behaviors.disable('scrollZoom');
+	                myMap.behaviors.disable('drag');
+	        }
+
 			var myPlacemark = new ymaps.Placemark([parseFloat(post.lat), parseFloat(post.lng)]);
 			myMap.geoObjects.add(myPlacemark);
 		}

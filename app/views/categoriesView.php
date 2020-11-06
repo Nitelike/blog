@@ -9,6 +9,7 @@
 
 	<table class="table-list">
 		<tr>
+			<th>id</th>
 			<th>Название</th>
 			<th>Описание</th>
 			<th></th>
@@ -16,6 +17,9 @@
 
 		<tr>
 			<form method="post" action="<?=$data['path']?>/public/categories/create">
+				<td>
+					<span>id</span>
+				</td>
 				<td>
 					<textarea class="title-area" name="title" placeholder="Название" required="true" maxlength="150"></textarea>
 				</td>
@@ -31,6 +35,9 @@
 		<?php foreach($data['categories'] as $category) { ?>
 		<tr>
 			<form method="post" action="<?=$data['path']?>/public/categories/update/<?=$category['id']?>">
+				<td>
+					<span><?=$category['id']?></span>
+				</td>
 				<td>
 					<textarea class="title-area" name="title_<?=$category['id']?>" required="true" maxlength="150"><?=$category['title']?></textarea>
 				</td>

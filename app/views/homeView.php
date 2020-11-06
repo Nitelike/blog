@@ -8,26 +8,44 @@
 	    ymaps.ready(init);
 	    function init(){
 	        var myMap = new ymaps.Map("map", {
-		    center: [53.89911389, 28.13402537],
-		    zoom: 6
-		});
-	    var geoObjects = <?php echo json_encode($data['articles']); ?>;
-
-        for (var i = 0; i < geoObjects.length; i++) {
-        	geoObjects[i] = new ymaps.GeoObject({
-			    geometry: {
-			      type: "Point",
-			      coordinates: [parseFloat(geoObjects[i].lat), parseFloat(geoObjects[i].lng)]
-			    },
-			    properties: {
-			      clusterCaption: geoObjects[i].title,
-			      balloonContentBody: "<a style='word-wrap: break-word;' href='<?=$data['path']?>/public/article/read/" + parseInt(geoObjects[i].id) + "'><div class='point-image' style='background-image: url(" + geoObjects[i].src + ");'></div></a>" + "<a class='common-link' href='<?=$data['path']?>/public/article/read/" + parseInt(geoObjects[i].id) + "'>" + geoObjects[i].title + "</a>"
-			    }
+		    	center: [53.89911389, 28.13402537],
+		    	zoom: 6
 			});
-        }
-        var myClusterer = new ymaps.Clusterer({clusterDisableClickZoom: true});
-		myClusterer.add(geoObjects);
-		myMap.geoObjects.add(myClusterer);
+
+	        var isMobile = {
+	            Android: function() {return navigator.userAgent.match(/Android/i);},
+	            BlackBerry: function() {return navigator.userAgent.match(/BlackBerry/i);},
+	            iOS: function() {return navigator.userAgent.match(/iPhone|iPad|iPod/i);},
+	            Opera: function() {return navigator.userAgent.match(/Opera Mini/i);},
+	            Windows: function() {return navigator.userAgent.match(/IEMobile/i);},
+	            any: function() {
+	                return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+	            }
+	        };
+
+	        // после вызова карты
+	        if(isMobile.any()){
+	                myMap.behaviors.disable('scrollZoom');
+	                myMap.behaviors.disable('drag');
+	        }
+
+		    var geoObjects = <?php echo json_encode($data['articles']); ?>;
+
+	        for (var i = 0; i < geoObjects.length; i++) {
+	        	geoObjects[i] = new ymaps.GeoObject({
+				    geometry: {
+				      type: "Point",
+				      coordinates: [parseFloat(geoObjects[i].lat), parseFloat(geoObjects[i].lng)]
+				    },
+				    properties: {
+				      clusterCaption: geoObjects[i].title,
+				      balloonContentBody: "<a style='word-wrap: break-word;' href='<?=$data['path']?>/public/article/read/" + parseInt(geoObjects[i].id) + "'><div class='point-image' style='background-image: url(" + geoObjects[i].src + ");'></div></a>" + "<a class='common-link' href='<?=$data['path']?>/public/article/read/" + parseInt(geoObjects[i].id) + "'>" + geoObjects[i].title + "</a>"
+				    }
+				});
+	        }
+	        var myClusterer = new ymaps.Clusterer({clusterDisableClickZoom: true});
+			myClusterer.add(geoObjects);
+			myMap.geoObjects.add(myClusterer);
     }
 
 	</script>

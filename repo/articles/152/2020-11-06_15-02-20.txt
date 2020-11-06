@@ -1,0 +1,15 @@
+<?php return array (
+  'id' => '152',
+  'title' => 'О проекте',
+  'text' => 'Что-то о проекте',
+  'pubdate' => '2020-11-06 14:54:58',
+  'views' => '8',
+  'likes' => '0',
+  'dislikes' => '0',
+  'category_id' => ' 21,',
+  'last_author' => NULL,
+  'district_id' => NULL,
+  'lat' => '0',
+  'lng' => '0',
+  'subcategory_id' => '0',
+);

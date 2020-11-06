@@ -36,6 +36,15 @@
 		</select>
 		<br> <br>
 
+		<label for="category">Подкатегория</label>
+		<br>
+		<select name="subcategory">
+			<?php foreach ($data['subcategories'] as $subcategory) { ?>
+				<option <?php if($data['article']['subcategory_id'] == $subcategory['id']) echo 'selected'; ?> value="<?=$subcategory['id']?>"><?=$subcategory['title']?></option>
+			<?php } ?>
+		</select>
+		<br> <br>
+
 		<label for=""><a class="common-link" href="https://www.gpsies.com/coordinate.do?language=ru" target="blank">Координаты</a> обекта</label>
 		<br>
 		<input type="text" name="lat" placeholder="Широта" value="<?=$data['article']['lat']?>" autocomplete="off">
