@@ -45,7 +45,8 @@
 		</select>
 		<br> <br>
 
-		<label for=""><a class="common-link" href="https://www.gpsies.com/coordinate.do?language=ru" target="blank">Координаты</a> обекта</label>
+		<label for=""><a class="common-link" href="https://yandex.by/maps" target="blank">Координаты</a> обекта</label>
+
 		<br>
 		<input type="text" name="lat" placeholder="Широта" value="<?=$data['article']['lat']?>" autocomplete="off">
 		<input type="text" name="lng" placeholder="Долгота" value="<?=$data['article']['lng']?>" autocomplete="off">

@@ -2,7 +2,7 @@
 	<?php include_once '../app/views/user/titleView.php' ?>
 
 	<form method="post" action="<?=$data['path']?>/public/users/find">
-		<input required="true" placeholder="Имя пользователя" type="text" name="key" value="<?php if(isset($data['key'])) {echo $data['key'];} ?>">
+		<input required="true" placeholder="Имя пользователя" type="text" name="key" value="<?php if(isset($data['ukey'])) {echo $data['ukey'];} ?>">
 		<button type="submit" class="btn common-link">Найти</button>
 	</form>
 	<br>

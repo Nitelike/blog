@@ -85,7 +85,7 @@ class Article_Controller extends Controller
 		$vcs_model = $this->model('Vcs');
 		$versions = $vcs_model->get_versions('articles', $id);
 		
-		if(isset($_SESSION['user']) and $_SESSION['user']['status'] !== 'member')
+		if(isset($_SESSION['user']) and $_SESSION['user']['status'] != 'member')
 		{
 			$article_model = $this->model('Article');
 

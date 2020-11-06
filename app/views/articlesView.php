@@ -13,6 +13,11 @@
 
 <section class="articles-previews <?php if($data['search'] == 'false') { echo 'left'; } ?>">
 
+    <?php
+        if(!$data['articles'])
+            echo("<span class=\"title\">Нет статей</span>");
+    ?>
+
 	<?php foreach($data['articles'] as $article) { ?>
 
 	<div class="article-preview">

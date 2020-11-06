@@ -86,8 +86,12 @@ class Categories_Controller extends Controller
 		{
 			if(isset($_POST['key']))
 			{
-				$categories_model = $this->model('Categories');
-				$categories = $categories_model->find($_POST['key']);
+                $categories = array();
+                if(trim($_POST['key'])) 
+                {
+                    $categories_model = $this->model('Categories');
+				    $categories = $categories_model->find($_POST['key']);
+                }
 				$this->view(array('user/userMenu', 'categories'), 'generalTemplate', array('categories' => $categories, 'page' => 'Категории', 'key' => $_POST['key']));
 			}
 		}

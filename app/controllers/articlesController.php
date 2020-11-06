@@ -32,9 +32,13 @@ class Articles_Controller extends Controller
 	public function search()
 	{
 		$key = $_POST['key'];
-
-		$articles_model = $this->model('Articles');
-		$articles = $articles_model->get_by_key($key);
-		$this->view('articles', 'generalTemplate', array('articles' => $articles, 'search' => 'true', 'key' => htmlentities($key, ENT_QUOTES), 'page' => 'Результаты поиска'));
+        $articles = array();
+        
+        if(trim($key)) 
+        {
+            $articles_model = $this->model('Articles');
+		    $articles = $articles_model->get_by_key($key);
+        }
+        $this->view('articles', 'generalTemplate', array('articles' => $articles, 'key' => htmlentities($key, ENT_QUOTES), 'page' => 'Результаты поиска'));
 	}
 }
