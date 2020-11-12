@@ -151,8 +151,12 @@ class Categories_Controller extends Controller
 		{
 			if(isset($_POST['key']))
 			{
-				$categories_model = $this->model('Categories');
-				$subcategories = $categories_model->subfind($_POST['key']);
+				$subcategories = array();
+				if(trim($_POST['key'])) 
+                {
+                	$categories_model = $this->model('Categories');
+					$subcategories = $categories_model->subfind($_POST['key']);
+				}
 				$this->view(array('user/userMenu', 'subcategories'), 'generalTemplate', array('subcategories' => $subcategories, 'page' => 'Подкатегории', 'key' => $_POST['key']));
 			}
 		}

@@ -83,6 +83,17 @@
 
 			var myPlacemark = new ymaps.Placemark([parseFloat(post.lat), parseFloat(post.lng)]);
 			myMap.geoObjects.add(myPlacemark);
+
+			var location = ymaps.geolocation.get();
+
+			location.then(
+			  function(result) {
+			    myMap.geoObjects.add(result.geoObjects)
+			  },
+			  function(err) {
+			    console.log('Ошибка: ' + err)
+			  }
+			);
 		}
 	</script>
 </section>

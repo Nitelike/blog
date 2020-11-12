@@ -1,4 +1,4 @@
-<?php if($data['search'] == 'false') { ?>
+<?php if(isset($data['search']) && $data['search'] == 'false') { ?>
 
 <section class="right">
 	<span class="title">Подкатегории</span>

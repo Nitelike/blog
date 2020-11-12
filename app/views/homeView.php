@@ -31,6 +31,17 @@
 
 		    var geoObjects = <?php echo json_encode($data['articles']); ?>;
 
+		    var location = ymaps.geolocation.get();
+
+			location.then(
+			  function(result) {
+			    myMap.geoObjects.add(result.geoObjects)
+			  },
+			  function(err) {
+			    console.log('Ошибка: ' + err)
+			  }
+			);
+
 	        for (var i = 0; i < geoObjects.length; i++) {
 	        	geoObjects[i] = new ymaps.GeoObject({
 				    geometry: {
